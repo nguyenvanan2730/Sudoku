@@ -27,7 +27,7 @@ def processing(img):
     img_bitwise = cv2.bitwise_not(img_thres,img_thres)
     return img_bitwise
 
-#3. Find Contours
+#3. Find the the sudoku's frame
 def find_corners(img_proce, img_read):
 
     #find the contours on the img_proce
@@ -80,7 +80,7 @@ def find_corners(img_proce, img_read):
             return corners 
     else: return 0
 
-#4. Crop the image
+#4. Crop and transform the image
 def image_transform(image,corners):
     #Get these corners
     top_right, top_left, bottom_left, bottom_right = corners[0], corners[1], corners[2], corners[3]
@@ -111,7 +111,7 @@ def image_transform(image,corners):
 
     return img_crop
 
-#4. Create matrix 9x9 image
+#5. Create image's matrix 9x9
 def create_img_matrix(img_read, img_crop):
     grid = np.copy(img_crop)
     
@@ -151,7 +151,7 @@ def create_img_matrix(img_read, img_crop):
 
     return img_matrix
 
-#5.Extract the number from the cell
+#6.Extract the number from the cell
 def extrac_number(img_matrix):
 
     number_state=np.zeros(81,dtype=int)
