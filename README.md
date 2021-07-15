@@ -24,4 +24,6 @@
 1.5 Print the data
 
 ## III. Solve Sudoku (Backtracking)
+1.1 Using the Backtracking algorithms to slove the soduku
 
+1.2 Print the result to the screen
