@@ -25,9 +25,6 @@ def processing(img):
     
     #2.3 Dilating the image: In cases like noise removal, erosion is followed by dilation.
     img_bitwise = cv2.bitwise_not(img_thres,img_thres)
-    #cv2.imshow("bitwise_not",img_thres)
-    #cv2.imshow("img_bitwist",img_bitwise)
-    #cv2.waitKey(1)
     return img_bitwise
 
 #3. Find Contours
@@ -51,25 +48,8 @@ def find_corners(img_proce, img_read):
         #曲線など多数の点で構成される輪郭をより少ない点で近似できます
         img_approx = cv2.approxPolyDP(contour, 0.015*deta, True)
         
-        #cv2.imshow("SuDoKu_Frame", contour)
-        #if the contour after approxPolyDP have 4 point
         if len(img_approx) == 4:
-            #Plot the point on the screen
-            # plt_approx = cv2.drawContours(img_read, img_approx, -1, (0,255,0), 3)
-            # cv2.imshow("plt",plt_approx)
-            # cv2.waitKey(0)
-            #Number of data point before and after approxPolyDP
-            #print(f"contour {contour}: before: {len(contour)}, after: {len(img_approx)}")
-            #print(f"The value of img_approx: {img_approx}")
-            
-            #上下右左ポイントの座標取得
-            # Index 0 - top-right   (TOP LEFT)
-            #       1 - top-left    (BOTTOM LEFT)
-            #       2 - bottom-left (BOTTOM RIGHT)
-            #       3 - bottom-right    (TOP RIGHT)
-            # corners=[]
-            # for corner in img_approx:
-            # corners.append([corner[0][0], corner[0][1]])
+
             corners = [(corner[0][0],corner[0][1]) for corner in img_approx]
             #img_approx = np.argmin(img_approx,axis=0)
             #print ("img_approx before", corners )
@@ -128,19 +108,12 @@ def image_transform(image,corners):
     
     img_crop = cv2.resize(img_crop,(450,450))
     cv2.imwrite("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/number_extract/img_crop.png",img_crop)
-    # cv2.imshow("img_crop",img_crop)
-    # cv2.waitKey(0)
-    #cv2.imwrite("C:/Users/huyen/OneDrive/Desktop/VanAn/SUDOKU/img_crop.jpeg",img_crop)
+
     return img_crop
 
 #4. Create matrix 9x9 image
 def create_img_matrix(img_read, img_crop):
     grid = np.copy(img_crop)
-    # grid = cv2.cvtColor(grid, cv2.COLOR_BGR2GRAY)
-    # grid = cv2.bitwise_not(cv2.adaptiveThreshold(grid, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 101, 1))
-    # #grid = cv2.bitwise_not(cv2.adaptiveThreshold(grid, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 25, 1))
-    #print("grid.shape: ", grid.shape)
-    #cv2.imshow("grid",grid)
     
     edge_w = np.shape(grid)[0]
     edge_h = np.shape(grid)[1]
@@ -172,8 +145,6 @@ def create_img_matrix(img_read, img_crop):
             Y.append([y0,y1])
 
             img_cell_crop = grid[y0 : y1, x0:x1 ]
-            #img_matrix_crop = cv2.resize(img_cell_crop,(28,28))
-            #img_matrix_crop = cv2.cvtColor(img_matrix_crop, cv2.COLOR_BGR2GRAY)
             cv2.imwrite("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/cell/img%d.png"%i,img_cell_crop)
             img_matrix.append(img_cell_crop)
             i+=1
@@ -244,36 +215,6 @@ def extrac_number(img_matrix):
             else:
                 img_empty = cv2.imread("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/test/img50x50.png")
                 cv2.imwrite("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/number/img{}{}.png".format(i,j),img_empty)
-        #cv2.imwrite("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/number/img%d.jpeg"%i,img_matrix_num)
-    # increasing the size of the number allws for better interpreation,
-    # try adjusting the number and you will see the differnce.
-
-    # for i in range(81):
-        
-    #     #img_num = cv2.imread("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/cell/img%d.jpeg"%i,0)
-    #     img_num = img_matrix[i]
-    #     #cv2.imshow("img_num", img_num)
-    #     #thresold the image
-    #     #gray = cv2.threshold(img_num, 128, 255, cv2.THRESH_BINARY)[1]
-    #     gray = img_num
-    #     #cv2.imshow("gray",gray)
-    #     #Find contours
-    #     cnts = cv2.findContours(gray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    #     cnts = cnts[0] if len(cnts) == 2 else cnts[1]
-    #     #cv2.waitKey(0)
-    #     for c in cnts:
-    #         x, y, w, h = cv2.boundingRect(c)
-
-    #         if (x < 3 or y < 3 or h < 3 or w < 3):
-    #         # Note the number is always placed in the center
-    #         # Since image is 28x28
-    #         # the number will be in the center thus x >3 and y>3
-    #         # Additionally any of the external lines of the sudoku will not be thicker than 3
-    #             continue
-    #         img_matrix_num = gray[y:y + h, x:x + w]
-    #         cv2.imwrite("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/number/img%d.jpeg"%i,img_matrix_num)
-    # # increasing the size of the number allws for better interpreation,
-    # # try adjusting the number and you will see the differnce.
 
 
 def detect_image(img_frame):
@@ -282,7 +223,6 @@ def detect_image(img_frame):
     corners  = find_corners(img_proce, img_frame)
     return corners if corners !=0 else 0
     
-
 def extract_image(img_frame,corners):
     img_crop = image_transform(img_frame,corners)
     img_matrix = create_img_matrix(img_frame, img_crop)

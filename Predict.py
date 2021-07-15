@@ -4,9 +4,11 @@ import cv2
 import pickle
 
 def predict():
+    
     #Load the model
     filename = 'C://Users/nguye/Desktop/VanAn/SUDOKU/model/chars74k_2.sav'
     model_chars74k = pickle.load(open(filename, 'rb'))
+
     #Read the image data
     img_input = []
     for i in range(0,9):
@@ -21,7 +23,6 @@ def predict():
     #Predict the data
     pred_result = model_chars74k.predict(training_sudoku)
     
-
     #print the data
     number = np.array(pred_result)
     print("Predict value: \n",number.reshape(9,9))
