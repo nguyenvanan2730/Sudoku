@@ -28,4 +28,3 @@
 
 1.2 Print the result to the screen
 
-This was add to check the push command.
