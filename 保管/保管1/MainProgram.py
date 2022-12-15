@@ -1,6 +1,6 @@
 from re import VERBOSE
 from tensorflow import keras
-from tensorflow.keras.models import load_model
+#from tensorflow.keras.models import load_model
 import numpy as np
 import cv2
 
@@ -17,7 +17,7 @@ img_matrix = ImageProcess.create_img_matrix(img_read, img_crop)
 
 #2. Input: The matrix image 9x9
 #   Output: Predict the number of each image
-model_mnist = load_model('C://Users/nguye/Desktop/VanAn/SUDOKU/model/mnist_handwritting.h5')
+# model_mnist = load_model('C://Users/nguye/Desktop/VanAn/SUDOKU/model/mnist_handwritting.h5')
 
 img_input = np.array(img_matrix)
 print("img_input shape1: ", img_input.shape)
@@ -30,8 +30,8 @@ print("img_input shape: ", img_input.shape)
 print("img_input lenght2: ", len(img_input))
 print(img_input[0].shape)
 
-pred_result = model_mnist.predict(img_input)
-print(pred_result.shape)
+#pred_result = model_mnist.predict(img_input)
+#print(pred_result.shape)
 
 # pred_num = []
 # for i in len(pred_result[0]):
@@ -39,5 +39,5 @@ print(pred_result.shape)
 #     if number > 0.5:
 #         pred_num.append(pred_result[i][number.index])
 
-number = np.argmax(pred_result, axis=1)
-print(number)
+#number = np.argmax(pred_result, axis=1)
+#print(number)
