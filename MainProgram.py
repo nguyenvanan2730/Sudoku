@@ -7,7 +7,7 @@ import Predict as Predict
 import SudokuAlgorithm as SudokuAlgorithm
 import DisplayResult as DisplayResult
 
-try:
+""" try:
     capture = cv2.VideoCapture(0)
     capture.set(cv2.CAP_PROP_FRAME_WIDTH, 1400)
     capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 900)
@@ -21,21 +21,23 @@ try:
 
         if ret == False:
                 print("カメラから映像を取得できませんでした")
-                break
+                break """
   
     #1. Get the Image by the camera
     #  Input: The sudoku image from camera
     #  Output: 4 conner of the sudoku frame
-        img_corners = ImageProcess.detect_image(frame)
+frame = ImageProcess.read_img()
+img_corners = ImageProcess.detect_image(frame)
+img_crop = ImageProcess.image_transform(frame,img_corners)
 
-        if img_corners !=0:
-            if cv2.waitKey(1) & 0xFF == ord('c'):
-
+""" if img_corners !=0:
     #2 Extract the image
     #  Input:  The sudoku image frame
     #  Output: The image matrix: 9x9          
-                img_matrix, img_crop = ImageProcess.extract_image(frame,img_corners)
+    img_matrix, img_crop = ImageProcess.extract_image(frame,img_corners) """
 
+
+"""#VANAN-20221216
     #3 Predict the number
     #  Input:  The image matrix: 9x9
     #  Output:  The number of this image: [0,1,2,3,4,5,6,7,8,9]           
@@ -51,14 +53,14 @@ try:
                     print("result_matrix", result_matrix)
                     img_result = DisplayResult.DisplayResult(number_matrix.copy(),result_matrix.copy())
                     DisplayResult.showInMovedWindow("SudoKu",img_crop,300,200)
-                    DisplayResult.showInMovedWindow("Sloved",img_result,800,200)
+                    DisplayResult.showInMovedWindow("Sloved",img_result,800,200) """
                     
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+"""         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
     
     capture.release()
-    cv2.destroyAllWindows()
-
+    cv2.destroyAllWindows() """
+""" 
 except:
     import sys
-    print("This Error is by computer:", sys.exc_info()[0])
+    print("This Error is by computer:", sys.exc_info()[0]) """

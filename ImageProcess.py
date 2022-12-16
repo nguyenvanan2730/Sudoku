@@ -4,8 +4,8 @@ import numpy as np
 
 #1. Import the image
 def read_img():
-
-    url = "C://Users/nguye/Desktop/VanAn/SUDOKU/sudoku_an.jpg"
+    #url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-1.png"
+    url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-1.png"
     image = cv2.imread(url) #画像は強制的にグレイスケール画像として読み込まれます。
     #cv2.imshow("read_img",image)
     return image
@@ -76,7 +76,7 @@ def find_corners(img_proce, img_read):
             #print("The value of img_approx: ", img_approx)
             #corners = [(corner[0][0],corner[0][1]) for corner in img_approx]
             corners = [top_right, top_left, bottom_left, bottom_right]
-
+            print(corners)
             return corners 
     else: return 0
 
@@ -107,7 +107,8 @@ def image_transform(image,corners):
     img_crop = cv2.warpPerspective(image,grid,(width,height))
     
     img_crop = cv2.resize(img_crop,(450,450))
-    cv2.imwrite("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/number_extract/img_crop.png",img_crop)
+    cv2.imwrite("/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/crop-input-image/image_transform.png",img_crop)
+    #create logic check image had or not.
 
     return img_crop
 
@@ -145,7 +146,7 @@ def create_img_matrix(img_read, img_crop):
             Y.append([y0,y1])
 
             img_cell_crop = grid[y0 : y1, x0:x1 ]
-            cv2.imwrite("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/cell/img%d.png"%i,img_cell_crop)
+            cv2.imwrite("/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/matrix-input-image%d.png"%i,img_cell_crop)
             img_matrix.append(img_cell_crop)
             i+=1
 
@@ -196,7 +197,6 @@ def extrac_number(img_matrix):
 
                     if (x > 3 and y > 3 and x < 25 and y < 25 and h*w > 250): #15*25pixel
                         
-
                         img_matrix_num = img_bit[y:y + h, x:x + w]
                         
                         ratio = 100//h
