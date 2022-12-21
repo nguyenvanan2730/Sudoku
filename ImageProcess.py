@@ -5,7 +5,7 @@ import numpy as np
 #1. Import the image
 def read_img():
     #url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-1.png"
-    url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-1.png"
+    url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-2.jpeg"
     image = cv2.imread(url) #画像は強制的にグレイスケール画像として読み込まれます。
     #cv2.imshow("read_img",image)
     return image

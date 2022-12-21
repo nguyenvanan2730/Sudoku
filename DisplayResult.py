@@ -24,4 +24,3 @@ def showInMovedWindow(winname, img, x, y):
     cv2.namedWindow(winname)        # Create a named window
     cv2.moveWindow(winname, x, y)   # Move it to (x,y)
     cv2.imshow(winname,img)
-             
