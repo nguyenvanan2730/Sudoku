@@ -12,20 +12,32 @@ def read_img():
 
 #2. Preprocessing the image
 def processing(img):
-
+    path = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/preprocess-input-image/"
     #2.1 Gaussian blur:  reduce noise obtained in thresholding algorithm (adaptive thresholding)
     #convert color image to gray image
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) 
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    cv2.imwrite(f"{path}img1_bgr2gray.png",img)
+    cv2.imshow("img",img)
+    cv2.waitKey(0)
+
     #ksize.width and ksize.height can differ but they both must be positive and odd.
-    img_gauss = cv2.GaussianBlur(img.copy(), (7, 7), 0) 
+    img_gauss = cv2.GaussianBlur(img.copy(), (7, 7), 0)
+    cv2.imwrite(f"{path}img2_GaussianBlur.png",img_gauss)
+    cv2.imshow("img_gauss",img_gauss)
+    cv2.waitKey(0)
 
     #2.2 Thresholding: Segmenting the regions of the image
     img_thres = cv2.adaptiveThreshold(img_gauss, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 131, 2)
-    #cv2.imshow("adaptiveThreshold",img_thres)
+    cv2.imwrite(f"{path}img3_adaptiveThreshold.png",img_thres)
+    cv2.imshow("adaptiveThreshold",img_thres)
+    cv2.waitKey(0)
     
     #2.3 Dilating the image: In cases like noise removal, erosion is followed by dilation.
     #object to be found should be white and background should be black.
     img_bitwise = cv2.bitwise_not(img_thres,img_thres)
+    cv2.imwrite(f"{path}img4_bitwise.png",img_bitwise)
+    cv2.imshow("img_bitwise",img_bitwise)
+    cv2.waitKey(0)
     return img_bitwise
 
 #3. Find the the sudoku's frame
@@ -36,9 +48,11 @@ def find_corners(img_proce, img_read):
     #ext_contours = ext_contours[0] if len(ext_contours) == 2 else ext_contours[1]
     #Make the contours sort from the big to small
     ext_contours = sorted(ext_contours, key=cv2.contourArea, reverse=True)
-    sudoku_board = cv2.drawContours(img_read, ext_contours[0], -1, (0,255,0), 3)
-    cv2.imshow('Contours',sudoku_board)
-    cv2.waitKey(0)
+
+    # Fix-green-point-when-crop
+    # sudoku_board = cv2.drawContours(img_read_draw, ext_contours[0], -1, (0,255,0), 3)
+    # cv2.imshow('Contours',sudoku_board)
+    # cv2.waitKey(0)
     #cv2.destroyAllWindows()
 
     for contour in ext_contours[0:1]:
@@ -77,6 +91,8 @@ def find_corners(img_proce, img_read):
 
 #4. Crop and transform the image
 def image_transform(image,corners):
+    cv2.imshow("img_transform",image)
+    cv2.waitKey(0)
     #Get these corners
     top_right, top_left, bottom_left, bottom_right = corners[0], corners[1], corners[2], corners[3]
 
