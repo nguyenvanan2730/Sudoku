@@ -107,8 +107,8 @@ def image_transform(image,corners):
     height = max(int(height_right), int(height_left))
     print("width: {}/nheight: {}".format(width,height))
     #Contruct new points to obtain top-down view of image
-    dimensions = np.array([[0,0],  [width-1,0], [0, height-1], [width-1, height-1]], dtype="float32")
-
+    #dimensions = np.array([[0,0],  [width-1,0], [0, height-1], [width-1, height-1]], dtype="float32")
+    dimensions = np.array([[0,0],  [width,0], [0, height], [width, height]], dtype="float32")
     #convert to Numpy format
     ordered_corners = np.array([top_left,top_right, bottom_left, bottom_right], dtype = "float32")
     #ordered_corners = np.array([top_left, top_right, bottom_right, bottom_left], dtype = "float32")
