@@ -5,7 +5,7 @@ import numpy as np
 #1. Import the image
 def read_img():
     #url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-1.png"
-    url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-2.jpeg"
+    url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level15.jpeg"
     image = cv2.imread(url) #画像は強制的にグレイスケール画像として読み込まれます。
     #cv2.imshow("read_img",image)
     return image
@@ -24,6 +24,7 @@ def processing(img):
     #cv2.imshow("adaptiveThreshold",img_thres)
     
     #2.3 Dilating the image: In cases like noise removal, erosion is followed by dilation.
+    #object to be found should be white and background should be black.
     img_bitwise = cv2.bitwise_not(img_thres,img_thres)
     return img_bitwise
 
@@ -36,10 +37,9 @@ def find_corners(img_proce, img_read):
     #Make the contours sort from the big to small
     ext_contours = sorted(ext_contours, key=cv2.contourArea, reverse=True)
     sudoku_board = cv2.drawContours(img_read, ext_contours[0], -1, (0,255,0), 3)
-    windowsName = "Board"
-    cv2.namedWindow(windowsName,cv2.WND_PROP_FULLSCREEN)
-    cv2.setWindowProperty(windowsName,cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
-    cv2.imshow (windowsName, sudoku_board)
+    cv2.imshow('Contours',sudoku_board)
+    cv2.waitKey(0)
+    #cv2.destroyAllWindows()
 
     for contour in ext_contours[0:1]:
         #print("The lengt of contours: ", len(ext_contours))
@@ -47,37 +47,32 @@ def find_corners(img_proce, img_read):
         deta=cv2.arcLength(contour,True)
         #曲線など多数の点で構成される輪郭をより少ない点で近似できます
         img_approx = cv2.approxPolyDP(contour, 0.015*deta, True)
-        
+    
         if len(img_approx) == 4:
 
             corners = [(corner[0][0],corner[0][1]) for corner in img_approx]
             #img_approx = np.argmin(img_approx,axis=0)
             #print ("img_approx before", corners )
             corners = np.array(corners)
-            #print("img_approx after",corners)
-            ind = np.argsort( corners[:,0] )
-            img_approx = corners[ind] 
-            #top_left, bottom_left
-            if corners[0][1] < corners[1][1]:
-                top_left = corners[0]
-                bottom_left = corners[1]
-            else:
-                top_left = corners[1]
-                bottom_left = corners[0]
-
-            #top_right, bottom_right
-            if corners[2][1] < corners[3][1]:
-                top_right = corners[2]
-                bottom_right = corners[3]
-            else:
-                top_right = corners[3]
-                bottom_right = corners[2]
+            """ 0/0---x--->
+                |
+                |
+                y
+                |
+                |
+                v """
+ 
+            #20221222-fix the image was be roate incorrectly
+            top_right = corners[0]
+            top_left = corners[1]
+            bottom_left = corners[2]
+            bottom_right = corners[3]
             
             #print("The value of img_approx: ", img_approx)
             #corners = [(corner[0][0],corner[0][1]) for corner in img_approx]
             corners = [top_right, top_left, bottom_left, bottom_right]
             print(corners)
-            return corners 
+            return corners
     else: return 0
 
 #4. Crop and transform the image
@@ -107,9 +102,8 @@ def image_transform(image,corners):
     img_crop = cv2.warpPerspective(image,grid,(width,height))
     
     img_crop = cv2.resize(img_crop,(450,450))
-    cv2.imwrite("/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/crop-input-image/image_transform.png",img_crop)
+    cv2.imwrite("/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/crop-input-image/crop-input-image-.png",img_crop)
     #create logic check image had or not.
-
     return img_crop
 
 #5. Create image's matrix 9x9
@@ -129,7 +123,7 @@ def create_img_matrix(img_read, img_crop):
     #   46  47  48  49  50  51  52  53  54
     #   55  56  57  58  59  60  61  62  63
     #   64  65  66  67  68  69  70  71  72
-    #   73  74  75  76  77  78  79  80  81  
+    #   73  74  75  76  77  78  79  80  81 
 
     img_matrix=[]
     X = []

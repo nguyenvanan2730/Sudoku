@@ -20,7 +20,7 @@ def upload_file(file_name, bucket):
 # Recognize the image have been saved in S3.
 import boto3
 budget = "textract-sudoku-singapore"
-name = "sudoku-image-example-9.png"
+name = "sudoku-image-example-17.png"
 
 client = boto3.client('textract')
 response = client.detect_document_text(
@@ -83,7 +83,8 @@ print(f"Top position is:   ", top)
 # Convert left and top to list
 left=list(left)
 top=list(top)
-#Process recognize_list in case there are more number in a element
+
+#Fix1: recognize_list in case there are more number in a element
 for index,item in enumerate(recognize_list):
     if len(item)>1:
         temp_lst=list(item)
@@ -97,13 +98,17 @@ for index,item in enumerate(recognize_list):
         top[index+1:index+1]=top_a
 print(f"The recoginze_list after fix: {recognize_list}")
 
-
-# Process for case recognize > 9
+#Fix2: receive wrong the left possition (sudoku-image-example-6.png)
+for index,item in enumerate(left):
+    if index<(len(left)-1):
+        if (left[index]==left[index+1]):
+            if(top[index]==top[index+1]):
+               left[index+1]=left[index+1]+1
 
 #Export the result of matrix
 for x in range(0,len(recognize_list)):
     matrix[top[x]-1][left[x]-1]=recognize_list[x]
-print(f"The matrix is: {matrix}") 
+print(f"The matrix is: \n{matrix}") 
 
 
 #sudoku-image-example-1.png --->Test fail-->Test Ok
@@ -134,7 +139,7 @@ print(f"The matrix is: {matrix}")
  [  0   0   0 419   0   0   0   0   5]
  [  0   0   0   0   8   0   0  79   0]] """
 
- #sudoku-image-example-6.png --->Test fail
+ #sudoku-image-example-6.png --->Test fail　ーーー＞Test OK (#Fix2: receive wrong the left possition (sudoku-image-example-6.png)）
 """ 8,6 was be attached together (caculated position wrong)
 [[0 5 0 8 4 0 0 0 3]
  [8 0 0 6 1 9 0 0 2]
@@ -161,3 +166,46 @@ print(f"The matrix is: {matrix}")
 
 #sudoku-image-example-10.png --->Test Ok
 #sudoku-image-example-11.png --->Test Ok
+
+#sudoku-image-example-12.png ---> 未実行
+
+#sudoku-image-example-13.png ---> test fail
+""" Possition of number 3 was wrong :[6][6]
+[[8 0 0 0 0 0 0 0 0]
+ [0 0 3 6 0 0 0 0 0]
+ [0 7 0 0 9 0 2 0 0]
+ [0 5 0 0 0 7 0 0 0]
+ [0 0 0 0 4 5 7 0 0]
+ [0 0 0 1 0 0 3 0 0]
+ [0 0 1 0 0 0 6 8 0]
+ [0 0 8 5 0 0 0 1 0]
+ [0 9 0 0 0 0 4 0 0]] """
+
+
+#sudoku-image-example-14.png ---> test ok
+
+#sudoku-image-example-15.png ---> test fail (true on console)
+""" 
+Font word wrong, can not regonize
+[[4 0 6 3 0 0 2 0 0]
+ [5 0 3 7 0 4 0 0 0]
+ [0 0 0 9 0 0 8 4 3]
+ [2 3 0 0 0 0 9 0 0]
+ [0 5 0 6 4 7 5 7 1]
+ [9 0 1 4 0 8 3 0 0]
+ [0 6 4 0 0 0 0 7 0]
+ [8 0 5 0 0 3 9 2 0]
+ [0 0 0 0 0 0 0 0 0]]
+ """
+
+#sudoku-image-example-16.png ---> 未実行
+
+#sudoku-image-example-17.png ---> 未実行
+
+#sudoku-image-example-18.png ---> test ok
+
+#sudoku-image-example-19.png ---> test ok
+
+#sudoku-image-example-20.png ---> test ok
+
+# Cân nhắc phương án ko sử dụng openCV mà chỉ sử dụng toạ độ nhận được tử textract để dựng lại sudoku
