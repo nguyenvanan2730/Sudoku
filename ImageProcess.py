@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 import os
 
-url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level66.jpeg"
+url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level100.jpeg"
 file_name=os.path.basename(url)
 #1. Import the image
 def read_img():
@@ -69,7 +69,7 @@ def find_corners(img_proce, img_read):
 
             corners = [(corner[0][0],corner[0][1]) for corner in img_approx]
             #img_approx = np.argmin(img_approx,axis=0)
-            #print ("img_approx before", corners )
+            print ("img_approx before", corners )
             corners = np.array(corners)
             """ 0/0---x--->
                 |
@@ -78,17 +78,42 @@ def find_corners(img_proce, img_read):
                 |
                 |
                 v """
- 
+
             #20221222-fix the image was be roate incorrectly
-            top_right = corners[0]
-            top_left = corners[1]
-            bottom_left = corners[2]
-            bottom_right = corners[3]
+            left_point=[]
+            right_point=[]
+            x_corner=[corners[0][0],corners[1][0],corners[2][0],corners[3][0]]
+            y_corner=[corners[0][1],corners[1][1],corners[2][1],corners[3][1]]
+            x_corner.sort()
+            for index,item in enumerate(corners):
+                if corners[index][0] < x_corner[2]:
+                    left_point.append(corners[index])
+                else:
+                    right_point.append(corners[index])
+
+            if left_point[0][1]<left_point[1][1]:
+                top_left = left_point[0]
+                bottom_left =left_point[1]
+            else:
+                top_left = left_point[1]
+                bottom_left =left_point[0]                
+
+            if right_point[0][1]<right_point[1][1]:
+                top_right = right_point[0]
+                bottom_right =right_point[1]
+            else:
+                top_right = right_point[1]
+                bottom_right =right_point[0]
+
+            # top_right = corners[0]
+            # top_left = corners[1]
+            # bottom_left = corners[2]
+            # bottom_right = corners[3]
             
             #print("The value of img_approx: ", img_approx)
             #corners = [(corner[0][0],corner[0][1]) for corner in img_approx]
             corners = [top_right, top_left, bottom_left, bottom_right]
-            print(corners)
+            print(f"top_right, top_left, bottom_left, bottom_right", corners)
             return corners
     else: return 0
 

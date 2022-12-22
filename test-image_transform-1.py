@@ -29,16 +29,18 @@ cv2.waitKey(0)
 cv2.destroyAllWindows()
 
 import cv2
-img = cv2.imread('/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level100.jpeg')
+img = cv2.imread('/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level11.jpeg')
 dimensions = img.shape
 print(f"Dimensions: {dimensions}")
 
 # Make one pixel red
-image = cv2.circle(img, (589,374), radius=10, color=(0, 0, 255), thickness=-1) #Red
-image = cv2.circle(img, (70,384), radius=15, color=(0, 255, 0), thickness=-1)  #Green
-image = cv2.circle(img, (61,927), radius=20, color=(255, 0, 0), thickness=-1)  #Blue
-image = cv2.circle(img, (623,951), radius=25, color=(0, 255, 255), thickness=-1) #Yellow
+image = cv2.circle(img, (128,846), radius=10, color=(0, 0, 255), thickness=-1) #Red  ---> BOTTOM LEFT
+image = cv2.circle(img, (170,366), radius=15, color=(0, 255, 0), thickness=-1)  #Green  --->TOP LEFT
+image = cv2.circle(img, (636,366), radius=20, color=(255, 0, 0), thickness=-1)  #Blue  ===> TOP RIGHT
+image = cv2.circle(img, (650,871), radius=25, color=(0, 255, 255), thickness=-1) #Yellow ---> BOTTOM RIGHT
 # Save
 cv2.imshow("result.png",image)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+
+#[(170, 366), (128, 846), (650, 871), (636, 366)]
