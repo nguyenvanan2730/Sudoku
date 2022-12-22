@@ -1,11 +1,14 @@
 from re import I
 import cv2
 import numpy as np
+import os
 
+url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level66.jpeg"
+file_name=os.path.basename(url)
 #1. Import the image
 def read_img():
     #url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-1.png"
-    url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level15.jpeg"
+    #url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level15.jpeg"
     image = cv2.imread(url) #画像は強制的にグレイスケール画像として読み込まれます。
     #cv2.imshow("read_img",image)
     return image
@@ -17,27 +20,27 @@ def processing(img):
     #convert color image to gray image
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     cv2.imwrite(f"{path}img1_bgr2gray.png",img)
-    cv2.imshow("img",img)
-    cv2.waitKey(0)
+    # cv2.imshow("img",img)
+    # cv2.waitKey(0)
 
     #ksize.width and ksize.height can differ but they both must be positive and odd.
     img_gauss = cv2.GaussianBlur(img.copy(), (7, 7), 0)
     cv2.imwrite(f"{path}img2_GaussianBlur.png",img_gauss)
-    cv2.imshow("img_gauss",img_gauss)
-    cv2.waitKey(0)
+    # cv2.imshow("img_gauss",img_gauss)
+    # cv2.waitKey(0)
 
     #2.2 Thresholding: Segmenting the regions of the image
     img_thres = cv2.adaptiveThreshold(img_gauss, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 131, 2)
     cv2.imwrite(f"{path}img3_adaptiveThreshold.png",img_thres)
-    cv2.imshow("adaptiveThreshold",img_thres)
-    cv2.waitKey(0)
+    # cv2.imshow("adaptiveThreshold",img_thres)
+    # cv2.waitKey(0)
     
     #2.3 Dilating the image: In cases like noise removal, erosion is followed by dilation.
     #object to be found should be white and background should be black.
     img_bitwise = cv2.bitwise_not(img_thres,img_thres)
     cv2.imwrite(f"{path}img4_bitwise.png",img_bitwise)
-    cv2.imshow("img_bitwise",img_bitwise)
-    cv2.waitKey(0)
+    # cv2.imshow("img_bitwise",img_bitwise)
+    # cv2.waitKey(0)
     return img_bitwise
 
 #3. Find the the sudoku's frame
@@ -91,8 +94,6 @@ def find_corners(img_proce, img_read):
 
 #4. Crop and transform the image
 def image_transform(image,corners):
-    cv2.imshow("img_transform",image)
-    cv2.waitKey(0)
     #Get these corners
     top_right, top_left, bottom_left, bottom_right = corners[0], corners[1], corners[2], corners[3]
 
@@ -118,7 +119,7 @@ def image_transform(image,corners):
     img_crop = cv2.warpPerspective(image,grid,(width,height))
     
     img_crop = cv2.resize(img_crop,(450,450))
-    cv2.imwrite("/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/crop-input-image/crop-input-image-.png",img_crop)
+    cv2.imwrite("/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/crop-input-image/%s"%file_name,img_crop)
     #create logic check image had or not.
     return img_crop
 
@@ -172,7 +173,7 @@ def extrac_number(img_matrix):
         grid = cv2.cvtColor(img_matrix[i], cv2.COLOR_BGR2GRAY)
         img_gauss = cv2.GaussianBlur(grid.copy(), (13, 13), 0)
         grid = cv2.bitwise_not(cv2.adaptiveThreshold(img_gauss, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 171, 1))
-        cv2.imwrite("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/number_extract/img%d.png"%i,grid)
+        cv2.imwrite("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/number_extract/img%d"%i,grid)
         #Find contours
         cnts,_ = cv2.findContours(grid, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         # cnts = cnts[0] if len(cnts) == 2 else cnts[1]
