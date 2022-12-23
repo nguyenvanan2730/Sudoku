@@ -3,8 +3,8 @@ import cv2
 import numpy as np
 import os
 
-url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level100.jpeg"
-file_name=os.path.basename(url)
+url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level66.jpeg"
+file_name=os.path.splitext(os.path.basename(url))[0]
 #1. Import the image
 def read_img():
     #url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-1.png"
@@ -58,13 +58,16 @@ def find_corners(img_proce, img_read):
     # cv2.waitKey(0)
     #cv2.destroyAllWindows()
 
-    for contour in ext_contours[0:1]:
+    for contour in ext_contours[0:2]:
         #print("The lengt of contours: ", len(ext_contours))
         #輪郭の周囲の長さを計算できます
         deta=cv2.arcLength(contour,True)
         #曲線など多数の点で構成される輪郭をより少ない点で近似できます
+        #img_approx = cv2.approxPolyDP(contour, 0.015*deta, True)
         img_approx = cv2.approxPolyDP(contour, 0.015*deta, True)
-    
+        print("img_approx_len",len(img_approx))
+        print("img_approx",img_approx)
+ # Chỉ lấy ra 4 điểm chỗ này.
         if len(img_approx) == 4:
 
             corners = [(corner[0][0],corner[0][1]) for corner in img_approx]
@@ -105,17 +108,12 @@ def find_corners(img_proce, img_read):
                 top_right = right_point[1]
                 bottom_right =right_point[0]
 
-            # top_right = corners[0]
-            # top_left = corners[1]
-            # bottom_left = corners[2]
-            # bottom_right = corners[3]
-            
-            #print("The value of img_approx: ", img_approx)
-            #corners = [(corner[0][0],corner[0][1]) for corner in img_approx]
             corners = [top_right, top_left, bottom_left, bottom_right]
             print(f"top_right, top_left, bottom_left, bottom_right", corners)
             return corners
-    else: return 0
+    else: 
+        print("The approxPolyDP!=4")
+        return 0
 
 #4. Crop and transform the image
 def image_transform(image,corners):
@@ -143,8 +141,9 @@ def image_transform(image,corners):
     grid = cv2.getPerspectiveTransform(ordered_corners, dimensions)
     img_crop = cv2.warpPerspective(image,grid,(width,height))
     
+    #img_crop = cv2.resize(img_crop,(450,450))
     img_crop = cv2.resize(img_crop,(450,450))
-    cv2.imwrite("/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/crop-input-image/%s"%file_name,img_crop)
+    cv2.imwrite("/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/crop-input-image/%s.png"%file_name,img_crop)
     #create logic check image had or not.
     return img_crop
 
