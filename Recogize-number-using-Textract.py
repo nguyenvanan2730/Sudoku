@@ -20,7 +20,7 @@ def upload_file(file_name, bucket):
 # Recognize the image have been saved in S3.
 import boto3
 budget = "textract-sudoku-singapore"
-name = "sudoku-image-example-17.png"
+name = "sudoku-image-example-level15.png"
 
 client = boto3.client('textract')
 response = client.detect_document_text(
