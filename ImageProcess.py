@@ -2,8 +2,7 @@ from re import I
 import cv2
 import numpy as np
 import os
-
-url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/(未)sudoku-image-example-3.png"
+url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level15.jpeg"
 file_name=os.path.splitext(os.path.basename(url))[0]
 #1. Import the image
 def read_img():
@@ -142,111 +141,7 @@ def image_transform(image,corners):
     img_crop = cv2.resize(img_crop,(450,450))
     cv2.imwrite("/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/crop-input-image/%s.png"%file_name,img_crop)
     #create logic check image had or not.
-    return img_crop
-
-#5. Create image's matrix 9x9
-def create_img_matrix(img_read, img_crop):
-    grid = np.copy(img_crop)
-    
-    edge_w = np.shape(grid)[0]
-    edge_h = np.shape(grid)[1]
-    celledge_h = edge_h // 9
-    celledge_w = edge_w //9
-    
-    #   1   2   3   4   5   6   7   8   9   
-    #   10  11  12  13  14  15  16  17  18
-    #   19  20  21  22  23  24  25  26  27
-    #   28  29  30  31  32  33  34  35  36
-    #   37  38  39  40  41  42  43  44  45
-    #   46  47  48  49  50  51  52  53  54
-    #   55  56  57  58  59  60  61  62  63
-    #   64  65  66  67  68  69  70  71  72
-    #   73  74  75  76  77  78  79  80  81 
-
-    img_matrix=[]
-    X = []
-    Y = []
-    i=0
-    for cell_h in range(0, edge_h, celledge_h):
-        for cell_w in range(0, edge_w, celledge_w):
-            #img_cell_crop=grid[0:50,0:50]
-            x0 = cell_w
-            x1 = x0 + celledge_w
-            y0 = cell_h
-            y1 = y0 + celledge_h
-            X.append([x0,y0])
-            Y.append([y0,y1])
-
-            img_cell_crop = grid[y0 : y1, x0:x1 ]
-            cv2.imwrite("/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/matrix-input-image%d.png"%i,img_cell_crop)
-            img_matrix.append(img_cell_crop)
-            i+=1
-
-    return img_matrix
-
-#6.Extract the number from the cell
-def extrac_number(img_matrix):
-
-    number_state=np.zeros(81,dtype=int)
-
-    for i in range(81):
-
-        grid = cv2.cvtColor(img_matrix[i], cv2.COLOR_BGR2GRAY)
-        img_gauss = cv2.GaussianBlur(grid.copy(), (13, 13), 0)
-        grid = cv2.bitwise_not(cv2.adaptiveThreshold(img_gauss, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 171, 1))
-        cv2.imwrite("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/number_extract/img%d"%i,grid)
-        #Find contours
-        cnts,_ = cv2.findContours(grid, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-        # cnts = cnts[0] if len(cnts) == 2 else cnts[1]
-        #cv2.waitKey(0)
-        for c in cnts:
-            x, y, w, h = cv2.boundingRect(c)
-
-            if (x < 3 or y < 3 or x > 25 or y > 25 or h < 10 or w < 10 or h*w < 250): #15*25pixel
-            # Note the number is always placed in the center
-            # Since image is 28x28
-            # the number will be in the center thus x >3 and y>3
-            # Additionally any of the external lines of the sudoku will not be thicker than 3
-                continue
-            else: number_state[i]=1
-
-    number_state = np.reshape(number_state,(9,9))
-    print("number_state: ", number_state)
-
-    for i in range(9):
-        for j in range(9):
-
-            if number_state[i][j] ==1:
-
-                img_gray = cv2.cvtColor(img_matrix[i*9+j], cv2.COLOR_BGR2GRAY)
-                img_gauss = cv2.GaussianBlur(img_gray.copy(), (7, 7), 0)
-                img_bit = cv2.bitwise_not(cv2.adaptiveThreshold(img_gauss, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 25, 1))    
-                
-                cnts, _ = cv2.findContours(img_bit, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-                ext_cnts = sorted(cnts, key=cv2.contourArea, reverse=True)               
-                for c in ext_cnts[0:2]:
-                    x, y, w, h = cv2.boundingRect(c)
-
-                    if (x > 3 and y > 3 and x < 25 and y < 25 and h*w > 250): #15*25pixel
-                        
-                        img_matrix_num = img_bit[y:y + h, x:x + w]
-                        
-                        ratio = 100//h
-                        w1 = ratio*w
-                        h1 = ratio*h
-
-                        top = (120 - h1)//2
-                        bottom = 120 - h1 - top
-                        left = (120 - w1)//2
-                        right = 120 - w1 - left
-
-                        img_matrix_num = cv2.resize(img_matrix_num,(w1,h1))
-                        img_matrix_num = cv2.copyMakeBorder(img_matrix_num, top, bottom, left, right, cv2.BORDER_CONSTANT)
-
-                        cv2.imwrite("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/number/img{}{}.png".format(i,j),img_matrix_num)
-            else:
-                img_empty = cv2.imread("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/test/img50x50.png")
-                cv2.imwrite("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/number/img{}{}.png".format(i,j),img_empty)
+    return file_name
 
 
 def detect_image(img_frame):
@@ -254,10 +149,3 @@ def detect_image(img_frame):
     img_proce = processing(img_frame)
     corners  = find_corners(img_proce, img_frame)
     return corners if corners !=0 else 0
-    
-def extract_image(img_frame,corners):
-    img_crop = image_transform(img_frame,corners)
-    img_matrix = create_img_matrix(img_frame, img_crop)
-    extrac_number(img_matrix)
-    return img_matrix, img_crop
-

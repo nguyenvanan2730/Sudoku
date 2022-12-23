@@ -3,9 +3,10 @@ import numpy as np
 import cv2
 
 import ImageProcess as ImageProcess
-#import Predict as Predict
 import SudokuAlgorithm as SudokuAlgorithm
 import DisplayResult as DisplayResult
+import UploadCropImageToS3 as UploadCropImageToS3
+import RecogizeNumberUsingTextract as RecogizeNumberUsingTextract
 
 
 #1. Get the Image from local storage
@@ -13,8 +14,10 @@ import DisplayResult as DisplayResult
 #  Output: Save the sudoku's area of the cropped image
 frame = ImageProcess.read_img()
 img_corners = ImageProcess.detect_image(frame)
-img_crop = ImageProcess.image_transform(frame,img_corners)
-
+local_crop_img_url = ImageProcess.image_transform(frame,img_corners)
+s3_crop_img_url = UploadCropImageToS3.upload_file(local_crop_img_url)
+matrix = RecogizeNumberUsingTextract.recognize_number(s3_crop_img_url)
+image_text=DisplayResult.DisplayResult(matrix)
 #2. Using Textract to recognize number.
 # Input: The image was be cropped.
 # Output: The number was be recognized by Textact.
