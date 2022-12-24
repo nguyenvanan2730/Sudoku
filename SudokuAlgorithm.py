@@ -111,4 +111,4 @@ def soduku_algorithm(number_matrix):
     else:
         print ("There are no solution for this Soduko")
         return 0,False
-    return number_matrix,True
+    return number_matrix

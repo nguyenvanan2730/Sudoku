@@ -2,7 +2,7 @@ from re import I
 import cv2
 import numpy as np
 import os
-url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level15.jpeg"
+url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level64.jpeg"
 file_name=os.path.splitext(os.path.basename(url))[0]
 #1. Import the image
 def read_img():

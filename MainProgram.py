@@ -18,6 +18,8 @@ local_crop_img_url = ImageProcess.image_transform(frame,img_corners)
 s3_crop_img_url = UploadCropImageToS3.upload_file(local_crop_img_url)
 matrix = RecogizeNumberUsingTextract.recognize_number(s3_crop_img_url)
 image_text=DisplayResult.DisplayResult(matrix)
+matrix_result=SudokuAlgorithm.soduku_algorithm(matrix)
+DisplayResult.DisplayResult(matrix_result)
 #2. Using Textract to recognize number.
 # Input: The image was be cropped.
 # Output: The number was be recognized by Textact.
