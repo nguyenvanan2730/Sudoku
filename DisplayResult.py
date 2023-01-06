@@ -1,9 +1,10 @@
 import numpy as np
 import cv2
+import ImageProcess as ImageProcess
 
-def DisplayResult(img_matrix, img_result):
+def DisplayResult(img_matrix):
     # Load the image
-    img =cv2.imread("C://Users/nguye/Desktop/VanAn/SUDOKU/Image/test/board.png")
+    img =cv2.imread("/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Board/sudoku_board.jpeg")
 
     #Add the number on the image
     lb_x0 = 17
@@ -15,13 +16,9 @@ def DisplayResult(img_matrix, img_result):
             if img_matrix[i][j] !=0:
                 img_text = cv2.putText(img, str(int(img_matrix[i][j])), (x, y),cv2.FONT_HERSHEY_SIMPLEX,1, (0,0,0), 2, cv2.LINE_AA)
 
-            else:
-                img_text = cv2.putText(img, str(int(img_result[i][j])), (x, y),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255), 2, cv2.LINE_AA)
-
+            # else:
+            #     img_text = cv2.putText(img, str(int(img_result[i][j])), (x, y),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255), 2, cv2.LINE_AA)
+    cv2.imshow("Sudoku Result:",img_text)
+    cv2.imshow("Sudoku Input",cv2.imread(ImageProcess.url))
+    cv2.waitKey(0)
     return img_text
-                
-def showInMovedWindow(winname, img, x, y):
-    cv2.namedWindow(winname)        # Create a named window
-    cv2.moveWindow(winname, x, y)   # Move it to (x,y)
-    cv2.imshow(winname,img)
-             
