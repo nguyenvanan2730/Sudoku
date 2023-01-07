@@ -70,3 +70,19 @@ python manage.py migrate
 
 1.3 Run Server
 python manage.py runserver
+
+1.4 Create Django App
+python manage.py startapp hello
+
+1.5 To use ImageField, have to install Pillow
+python -m pip install Pillow
+
+# III. Algorithm Framework
+1. Numpy
+pip install numpy
+
+2. opencv
+pip3 install opencv-python
+
+3. boto3
+pip install boto3

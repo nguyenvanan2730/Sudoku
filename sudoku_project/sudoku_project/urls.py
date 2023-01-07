@@ -15,7 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+from sudoku_app import views as view1
+from algorithm_app import views as view2
+
 
 urlpatterns = [
+    path('',view1.sudoku_image_input_view, name="sudoku_image_input_view"),
     path('admin/', admin.site.urls),
+    path('success', view2.success, name='success'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

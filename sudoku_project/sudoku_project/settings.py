@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sudoku_app',
+    'algorithm_app'
 ]
 
 MIDDLEWARE = [
@@ -121,3 +123,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Using for image upload
+MEDIA_ROOT =  "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/sudoku_project/sudoku_app/media"
+MEDIA_URL = '/image/'
