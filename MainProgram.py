@@ -8,7 +8,6 @@ import DisplayResult as DisplayResult
 import UploadCropImageToS3 as UploadCropImageToS3
 import RecogizeNumberUsingTextract as RecogizeNumberUsingTextract
 
-
 #1. Get the Image from local storage
 #  Input: The sudoku image from local storage
 #  Output: Save the sudoku's area of the cropped image
