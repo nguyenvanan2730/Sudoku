@@ -29,3 +29,11 @@
 1.2 Print the result to the screen
 
 This was add to check the push command.
+
+
+# GIT command
+1.1 Create a branch
+git branch feature/annv/add-django
+
+1.2 Switch to a branch
+git switch feature/annv/add-django
