@@ -2,13 +2,13 @@ from re import I
 import cv2
 import numpy as np
 import os
-url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level64.jpeg"
-file_name=os.path.splitext(os.path.basename(url))[0]
+#url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level64.jpeg"
+#file_name=os.path.splitext(os.path.basename(url))[0]
 #1. Import the image
-def read_img():
+def read_img(file_path):
     #url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-1.png"
     #url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level15.jpeg"
-    image = cv2.imread(url) #画像は強制的にグレイスケール画像として読み込まれます。
+    image = cv2.imread(file_path) #画像は強制的にグレイスケール画像として読み込まれます。
     #cv2.imshow("read_img",image)
     return image
 
@@ -113,7 +113,7 @@ def find_corners(img_proce, img_read):
         return 0
 
 #4. Crop and transform the image
-def image_transform(image,corners):
+def image_transform(image,corners,file_path):
     #Get these corners
     top_right, top_left, bottom_left, bottom_right = corners[0], corners[1], corners[2], corners[3]
 
@@ -139,6 +139,8 @@ def image_transform(image,corners):
     img_crop = cv2.warpPerspective(image,grid,(width,height))
     
     img_crop = cv2.resize(img_crop,(450,450))
+    
+    file_name=os.path.splitext(os.path.basename(file_path))[0]
     cv2.imwrite("/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/crop-input-image/%s.png"%file_name,img_crop)
     #create logic check image had or not.
     return file_name

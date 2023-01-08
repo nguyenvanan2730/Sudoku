@@ -8,16 +8,16 @@ from algorithm_app import DisplayResult as DisplayResult
 from algorithm_app import UploadCropImageToS3 as UploadCropImageToS3
 from algorithm_app import RecogizeNumberUsingTextract as RecogizeNumberUsingTextract
 
-def mainProgram():
+def mainProgram(file_path):
     #1. Get the Image from local storage
     #  Input: The sudoku image from local storage
     #  Output: Save the sudoku's area of the cropped image
-    frame = ImageProcess.read_img()
+    frame = ImageProcess.read_img(file_path)
     img_corners = ImageProcess.detect_image(frame)
-    local_crop_img_url = ImageProcess.image_transform(frame,img_corners)
+    local_crop_img_url = ImageProcess.image_transform(frame,img_corners,file_path)
     s3_crop_img_url = UploadCropImageToS3.upload_file(local_crop_img_url)
     matrix = RecogizeNumberUsingTextract.recognize_number(s3_crop_img_url)
-    image_text=DisplayResult.DisplayResult(matrix)
+    #image_text=DisplayResult.DisplayResult(matrix)
     matrix_result=SudokuAlgorithm.soduku_algorithm(matrix)
     DisplayResult.DisplayResult(matrix_result)
     #2. Using Textract to recognize number.

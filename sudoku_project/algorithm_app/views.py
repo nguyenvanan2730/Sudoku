@@ -4,5 +4,4 @@ from algorithm_app import MainProgram
 
 # Create your views here.
 def success(request):
-    MainProgram.mainProgram()
     return HttpResponse('This is algorithm app')

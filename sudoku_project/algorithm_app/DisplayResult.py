@@ -18,7 +18,7 @@ def DisplayResult(img_matrix):
 
             # else:
             #     img_text = cv2.putText(img, str(int(img_result[i][j])), (x, y),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255), 2, cv2.LINE_AA)
-    cv2.imshow("Sudoku Result:",img_text)
-    cv2.imshow("Sudoku Input",cv2.imread(ImageProcess.url))
-    cv2.waitKey(0)
+    # cv2.imshow("Sudoku Result:",img_text)
+    # cv2.imshow("Sudoku Input",cv2.imread(ImageProcess.url))
+    # cv2.waitKey(0)
     return img_text
