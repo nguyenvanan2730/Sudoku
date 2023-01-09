@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotel_image</title>
+</head>
+<body>
+    <style>
+            table { border-collapse: collapse; font-family: Calibri, sans-serif; text-align: center;}
+            colgroup, tbody { border: solid medium; }
+            td { border: solid thin; height: 45px; width: 45px; text-align: center; padding: 0; }
+
+            td input[type="text"]{
+                    height: 43px; 
+                    width: 43px; 
+                    text-align: 
+                    center; padding: 0; 
+                    border: none;
+                    font-size: x-large;
+                    font-weight: 500px;
+                    }   
+    </style>
+
+    <table>
+            <colgroup><col><col><col></colgroup>
+            <colgroup><col><col><col></colgroup>
+            <colgroup><col><col><col></colgroup>
+            {% for row in sloved_matrix %}
+                <tr>
+                {% for col in row %}
+                    <td>
+                        {% if col != 0 %}
+                        <input type="text" maxlength="1" value={{ col }}>
+                        {% else %}
+                        <input type="text" maxlength="1" value="">
+                        {% endif %}
+                    </td>
+                {% endfor %}
+                </tr>
+            {% endfor %}
+    </table>
+</body>
+</html>
