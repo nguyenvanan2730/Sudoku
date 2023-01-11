@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from sudoku_app import views as view1
@@ -22,9 +22,8 @@ from algorithm_app import views as view2
 
 
 urlpatterns = [
-    path('',view1.sudoku_image_input_view, name="sudoku_image_input_view"),
     path('admin/', admin.site.urls),
-    path('success', view2.success, name='success'),
+    path('', include('sudoku_app.urls'))
 ]
 
 if settings.DEBUG:
