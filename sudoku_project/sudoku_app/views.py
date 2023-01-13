@@ -19,7 +19,7 @@ def sudoku_image_input_view(request):
                 return render(request,'sudoku_app/display_sudoku_result2.html', {'reg_matrix': reg_matrix})
                 #return redirect("success", t1)
 
-        elif 'Slove' in request.POST:
+        elif 'Solve' in request.POST:
             matrix_input =  np.zeros((9,9), dtype=int)
             for row in range(0,9):
                 for col in range(0,9):

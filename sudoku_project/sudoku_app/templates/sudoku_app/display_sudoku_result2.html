@@ -8,34 +8,40 @@
     <title>Hotel_image</title>
 </head>
 <body>
-<form method = "post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <table>
-        <colgroup><col><col><col></colgroup>
-        <colgroup><col><col><col></colgroup>
-        <colgroup><col><col><col></colgroup>
-        {% for row in reg_matrix %}
-            {% if forloop.counter0 == 2 or forloop.counter0 == 5 %} 
-                <tr class="trx">
-            {% else %}
-                <tr>
-            {% endif %}
 
-            {% for col in row %}
-                    <td>
-                        {% if col != 0 %}
-                        <input type="text" maxlength="1" value={{ col }} name= '{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
+    <div class="conternai">
+        <h2>SUDOKU SOLVER</h2>
+
+        <div class="center-div">
+            <form method = "post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    <colgroup><col><col><col></colgroup>
+                    <colgroup><col><col><col></colgroup>
+                    <colgroup><col><col><col></colgroup>
+                    {% for row in reg_matrix %}
+                        {% if forloop.counter0 == 2 or forloop.counter0 == 5 %} 
+                            <tr class="trx">
                         {% else %}
-                        <input type="text" maxlength="1" value="" name='{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
+                            <tr>
                         {% endif %}
-                    </td>
-            {% endfor %}
-                </tr>
-        {% endfor %}
-    </table>
-    <button type="submit" name="Slove">Slove</button>
-</form>
 
+                        {% for col in row %}
+                                <td>
+                                    {% if col != 0 %}
+                                    <input type="text" maxlength="1" value={{ col }} name= '{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
+                                    {% else %}
+                                    <input type="text" maxlength="1" value="" name='{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
+                                    {% endif %}
+                                </td>
+                        {% endfor %}
+                            </tr>
+                    {% endfor %}
+                </table>
+                <button class="button" type="submit" name="Solve">Solve</button>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>
