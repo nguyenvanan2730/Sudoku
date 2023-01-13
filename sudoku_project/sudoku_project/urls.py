@@ -20,11 +20,10 @@ from django.conf.urls.static import static
 from sudoku_app import views as view1
 from algorithm_app import views as view2
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('sudoku_app.urls'))
-]
+]  + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

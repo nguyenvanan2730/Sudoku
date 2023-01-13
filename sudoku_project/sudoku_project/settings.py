@@ -120,7 +120,7 @@ import os
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'sudoku_app/static/sudoku_app',
+    BASE_DIR / "static",
 ]
 
 # Default primary key field type
