@@ -6,38 +6,45 @@
     <title>Hotel_image</title>
 </head>
 <body>
-<!--     <style>
-            table { border-collapse: collapse; font-family: Calibri, sans-serif; text-align: center;}
-            colgroup, tbody { border: solid medium; }
-            td { border: solid thin; height: 45px; width: 45px; text-align: center; padding: 0; }
-
-            td input[type="text"]{
-                    height: 43px; 
-                    width: 43px; 
-                    text-align: 
-                    center; padding: 0; 
-                    border: none;
-                    font-size: x-large;
-                    font-weight: 500px;
-                    }   
+    <style>
+    table { border-collapse: collapse; font-family: Calibri, sans-serif; text-align: center;}
+    colgroup, tbody { border: solid medium; }
+    
+    td { 
+        border: solid thin; 
+        height: 45px; 
+        width: 45px; 
+        text-align: center; 
+        padding: 0; 
+        font-size: x-large;
+        font-weight: 500px;
+    }
+    .trx{
+            border-bottom: solid medium;
+            }
     </style>
-<form method = "post" enctype="multipart/form-data">
-    {% csrf_token %}
+    <h1>This is the Solved Result</h1>
     <table>
         <colgroup><col><col><col></colgroup>
         <colgroup><col><col><col></colgroup>
         <colgroup><col><col><col></colgroup>
-        {% for row in matrix_result %}
-            <tr>
-            {% for col in row %}
-                <td>   {{ col }} </td>
+            {% for row in matrix_result1 %}
+                {% if forloop.counter0 == 2 or forloop.counter0 == 5 %} 
+                    <tr class="trx">
+                {% else %}
+                    <tr>
+                {% endif %}
+
+                {% for col in row %}
+                    {% if col != 0 %}
+                        <td> {{ col }} </td>
+                    {% else %}
+                        <td>{{ col }}</td>
+                    {% endif %}
+                {% endfor %}
+                </tr>
             {% endfor %}
-            </tr>
-        {% endfor %}
     </table>
-    <button type="submit" name="Slove">Slove</button>
-</form> -->
-<h1> Successful Updated</h1>
 </body>
 
 </html>

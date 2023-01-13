@@ -20,6 +20,9 @@
             font-size: x-large;
             font-weight: 500px;
             }
+    .trx{
+            border-bottom: solid medium;
+            }
     </style>
 <form method = "post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -28,17 +31,22 @@
         <colgroup><col><col><col></colgroup>
         <colgroup><col><col><col></colgroup>
         {% for row in reg_matrix %}
-            <tr>
+            {% if forloop.counter0 == 2 or forloop.counter0 == 5 %} 
+                <tr class="trx">
+            {% else %}
+                <tr>
+            {% endif %}
+
             {% for col in row %}
-                <td>
-                    {% if col != 0 %}
-                    <input type="text" maxlength="1" value={{ col }} name= '{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
-                    {% else %}
-                    <input type="text" maxlength="1" value="" name='{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
-                    {% endif %}
-                </td>
+                    <td>
+                        {% if col != 0 %}
+                        <input type="text" maxlength="1" value={{ col }} name= '{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
+                        {% else %}
+                        <input type="text" maxlength="1" value="" name='{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
+                        {% endif %}
+                    </td>
             {% endfor %}
-            </tr>
+                </tr>
         {% endfor %}
     </table>
     <button type="submit" name="Slove">Slove</button>
