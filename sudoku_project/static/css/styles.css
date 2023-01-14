@@ -30,25 +30,70 @@ h2{
 .center-div {
     display: flex; 
     justify-content: center; 
-    height: 100vh;
+    /* height: 100vh; */
     }
 
 .button 
 {
-    font-size: 28px;
+    font-size: 20px;
     text-align: center;
     align-items: center;
     cursor: pointer;
     color: #fff;
-    background-color: #8edb86;
-    border-radius: 10px;
-    width: 450px;
-    height: 60px;
+
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    height: 50px;
+    width: 100px;
+
+    border: 0.5px white;
 }
 
-.button:hover {background-color: #569332}
-
-.button:active {
-    background-color: #5db757;
-    transform: translateY(5px);
+.green{
+    background-color: #4CAF50;
 }
+
+.green:hover {background-color: #3e8e41}
+
+.red{
+    background-color: rgb(248, 4, 4);
+}
+
+.red:hover {background-color: #ae1d1d}
+
+
+.parent {
+    position: relative; /* This is important for the child element to be positioned relative to the parent */
+    border: 1px solid red;
+}
+
+.child_solve {
+    position: absolute;
+    left: 70%;
+    border: 0.5px solid red;
+}
+
+.child_upload {
+    position: absolute;
+    left: 5%;
+    border: 0.5px solid red;
+}
+
+.upload_bnt{
+    position: absolute;
+    left: 0%;
+    margin: 0px 0px;
+    padding: 0px 0px;
+    border: 0.5px solid red;
+}
+
+.choose_bnt{
+    position: absolute;
+    left: 30%;
+    margin: 0px 0px;
+    padding: 0px 0px;
+    border: 0.5px solid red;
+}
+
+

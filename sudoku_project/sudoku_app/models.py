@@ -4,6 +4,9 @@ import os
 import random
 import string
 import datetime
+
+from django import forms
+
 def content_file_name(instance, filename):
     s= random.choices(string.ascii_lowercase,k=5)
     listToStr = ' '.join(s)
@@ -17,4 +20,4 @@ def content_file_name(instance, filename):
 
 class sudoku_model(models.Model):
     #sudoku_image_upload=models.ImageField(upload_to='sudoku_input/')
-    sudoku_image_upload=models.ImageField(upload_to=content_file_name)
+    sudoku_image_upload=models.ImageField(upload_to=content_file_name,verbose_name="")

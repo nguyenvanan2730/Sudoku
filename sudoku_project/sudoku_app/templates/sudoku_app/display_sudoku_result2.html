@@ -13,33 +13,46 @@
         <h2>SUDOKU SOLVER</h2>
 
         <div class="center-div">
-            <form method = "post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <table>
-                    <colgroup><col><col><col></colgroup>
-                    <colgroup><col><col><col></colgroup>
-                    <colgroup><col><col><col></colgroup>
-                    {% for row in reg_matrix %}
-                        {% if forloop.counter0 == 2 or forloop.counter0 == 5 %} 
-                            <tr class="trx">
-                        {% else %}
-                            <tr>
-                        {% endif %}
+            <div class="parent">
+                <form method = "post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <table>
+                        <colgroup><col><col><col></colgroup>
+                        <colgroup><col><col><col></colgroup>
+                        <colgroup><col><col><col></colgroup>
+                        {% for row in reg_matrix %}
+                            {% if forloop.counter0 == 2 or forloop.counter0 == 5 %} 
+                                <tr class="trx">
+                            {% else %}
+                                <tr>
+                            {% endif %}
 
-                        {% for col in row %}
-                                <td>
-                                    {% if col != 0 %}
-                                    <input type="text" maxlength="1" value={{ col }} name= '{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
-                                    {% else %}
-                                    <input type="text" maxlength="1" value="" name='{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
-                                    {% endif %}
-                                </td>
+                            {% for col in row %}
+                                    <td>
+                                        {% if col != 0 %}
+                                        <input type="text" maxlength="1" value={{ col }} name= '{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
+                                        {% else %}
+                                        <input type="text" maxlength="1" value="" name='{{ forloop.parentloop.counter0 }}{{ forloop.counter0 }}'>
+                                        {% endif %}
+                                    </td>
+                            {% endfor %}
+                                </tr>
                         {% endfor %}
-                            </tr>
-                    {% endfor %}
-                </table>
-                <button class="button" type="submit" name="Solve">Solve</button>
-            </form>
+                    </table>
+                    <div class="child_solve">
+                        <button class="button green" type="submit" name="Solve">Solve</button>
+                    </div>
+                </form>
+
+
+                <div class="child_upload">
+                    <form method = "post" enctype="multipart/form-data" class="choose_bnt">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                    <button class="button red upload_bnt" type="submit" name="input_image_upload">Upload</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </body>
