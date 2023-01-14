@@ -23,12 +23,7 @@
                         {% endif %}
 
                         {% for cell in row %}
-<!--                             {% if col != 0 %}
-                                <td> {{ col }} </td>
-                            {% else %}
-                                <td>{{ col }}</td>
-                            {% endif %} -->
-                            <td {% if cell.input %}style="color: red"{% else %}style="color: black"{% endif %}>{{ cell.value }}</td>
+                            <td {% if cell.input %}class="output"{% else %}class="input"{% endif %}>{{ cell.value }}</td>
                         {% endfor %}
                         </tr>
                     {% endfor %}

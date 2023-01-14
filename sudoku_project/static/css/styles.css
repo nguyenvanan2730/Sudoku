@@ -1,17 +1,27 @@
 
 table { border-collapse: collapse; font-family: Calibri, sans-serif; text-align: center;}
 colgroup, tbody { border: solid medium; }
-td { border: solid thin; height: 50px; width: 50px; text-align: center; padding: 0; }
+td { border: solid thin; height: 52px; width: 52px; text-align: center; padding: 0; }
 
 td input[type="text"]{
-        height: 50px; 
-        width: 50px;
-        text-align: 
-        center; padding: 0; 
+        height: 43px; 
+        width: 43px;
+        text-align:center; 
+        padding: 0; 
         border: none;
         font-size: x-large;
-        font-weight: 500px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        /* font-weight: 500px; */
         }
+.td-text{
+        height: 43px; 
+        width: 43px;
+        text-align:center; 
+        padding: 0; 
+        border: none;
+        font-size: x-large;
+}
+
 .trx{
         border-bottom: solid medium;
         }
@@ -65,7 +75,7 @@ h2{
 
 .parent {
     position: relative; /* This is important for the child element to be positioned relative to the parent */
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .child_solve {
@@ -97,3 +107,16 @@ h2{
 }
 
 
+.output{
+    color: rgb(50, 155, 173);
+    font-size: x-large;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border: solid thin black;
+}
+
+.input{
+    color: black;
+    font-size: x-large;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    border: solid thin black;
+}
