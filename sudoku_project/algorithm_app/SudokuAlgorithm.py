@@ -1,4 +1,6 @@
 #ブランクcellを探す
+from datetime import datetime
+
 def find_empty_location(arr,l):
     for row in range(0,9):
         for col in range(0,9):
@@ -105,10 +107,17 @@ else:
 
 
 def soduku_algorithm(number_matrix):
+    start=datetime.now()
+    print('Start to solve sudoku at: ',start)
+
     if(solve_sudoku(number_matrix)):
         for i in range(0,9):
             print(number_matrix[i][:])
     else:
         print ("There are no solution for this Soduko")
         return 0,False
+
+    stop = datetime.now()
+    print('Stop solve sudoku at: ',stop)
+    print(f'Time to solve is: ',stop-start, 's')
     return number_matrix

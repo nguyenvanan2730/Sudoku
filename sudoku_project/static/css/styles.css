@@ -1,7 +1,7 @@
 
 table { border-collapse: collapse; font-family: Calibri, sans-serif; text-align: center;}
 colgroup, tbody { border: solid medium; }
-td { border: solid thin; height: 52px; width: 52px; text-align: center; padding: 0; }
+td { border: solid thin; height: 50px; width: 50px; text-align: center; padding: 0; }
 
 td input[type="text"]{
         height: 43px; 
@@ -28,6 +28,7 @@ td input[type="text"]{
 
 .conternai{
     background-color: rgba(243, 242, 242, 0.37);
+    margin: 0px auto;
 }
 
 h2{
@@ -37,10 +38,14 @@ h2{
     text-rendering: auto;
     text-decoration-color: azure;
 }
+
 .center-div {
     display: flex; 
     justify-content: center; 
-    /* height: 100vh; */
+    height: 450px;
+    width: 450px;
+    position: relative;
+    margin: 0px auto;
     }
 
 .button 
@@ -66,57 +71,84 @@ h2{
 
 .green:hover {background-color: #3e8e41}
 
+.green:active {
+    background-color: #164917;
+    box-shadow: 0 3px #666;
+    transform: translateY(2px);
+  }
+
 .red{
     background-color: rgb(248, 4, 4);
 }
 
 .red:hover {background-color: #ae1d1d}
 
+.red:active {
+    background-color: #b32a1b;
+    box-shadow: 0 3px #666;
+    transform: translateY(2px);
+  }
+
+  .red:disabled{
+    background-color: #f5efee;
+  }
 
 .parent {
-    position: relative; /* This is important for the child element to be positioned relative to the parent */
-    /* border: 1px solid red; */
+    border: 1px solid red;
 }
 
 .child_solve {
+    /* border: 1px solid red; */
+    position: absolute; 
+    margin: 0px auto;
+    bottom: -60px;
+    }
+
+.view-input{
     position: absolute;
-    left: 70%;
-    border: 0.5px solid red;
+    left: 460px;
+    width: 70px;
 }
 
 .child_upload {
-    position: absolute;
-    left: 5%;
-    border: 0.5px solid red;
+    display: block;
+    /* border: 0.5px solid red; */
+    position: fixed;
+    top: 350px;
 }
 
-.upload_bnt{
-    position: absolute;
-    left: 0%;
-    margin: 0px 0px;
-    padding: 0px 0px;
-    border: 0.5px solid red;
+.child_newinput{
+    display: block;
+    position: fixed;
+    top: 90px;
 }
+
+/* .upload_bnt{
+    position: absolute;
+    bottom: 0px;
+    margin: 0px 0px;
+    padding: 0px 0px; 
+    /* border: 0.5px solid red; 
+} */
 
 .choose_bnt{
     position: absolute;
     left: 30%;
     margin: 0px 0px;
     padding: 0px 0px;
-    border: 0.5px solid red;
+    /* border: 0.5px solid red; */
 }
-
 
 .output{
     color: rgb(50, 155, 173);
     font-size: x-large;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    border: solid thin black;
+    /* border: solid thin black; */
 }
 
 .input{
     color: black;
     font-size: x-large;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    border: solid thin black;
+    /* border: solid thin black; */
 }

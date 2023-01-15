@@ -27,6 +27,8 @@ def sudoku_image_input_view(request):
                     if request.POST.get(element) != "":
                         matrix_input[row][col] = request.POST.get(element)
             matrix_input_copy = matrix_input.copy()
+
+            # Slove sudoku
             print(f'matrix_input_before:',matrix_input)
             matrix_result=SudokuAlgorithm.soduku_algorithm(matrix_input_copy)
             print(f'matrix_input_after:',matrix_input)
@@ -58,6 +60,11 @@ def sudoku_image_input_view(request):
 
             form = Sudoku_input_imageForm()
             return render(request,'sudoku_app/display_sloved_result.html', {'matrix_result': matrix_result, 'form': form})
+
+        elif 'NewInput' in request.POST:
+            reg_matrix =  np.zeros((9,9), dtype=int)
+            form = Sudoku_input_imageForm()
+            return render(request,'sudoku_app/display_sudoku_result2.html', {'reg_matrix': reg_matrix, 'form': form})
 
         else: print("Do not recognize the POST")
     else:

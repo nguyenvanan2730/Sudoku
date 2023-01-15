@@ -5,16 +5,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Solved</title>
+    <title>SUDOKU SOLVER</title>
 </head>
 <body>
+
     <div class="conternai">
         <h2>SUDOKU SOLVER</h2>
+
         <div class="center-div">
-            <table>
-                <colgroup><col><col><col></colgroup>
-                <colgroup><col><col><col></colgroup>
-                <colgroup><col><col><col></colgroup>
+            <form method = "post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    <colgroup><col><col><col></colgroup>
+                    <colgroup><col><col><col></colgroup>
+                    <colgroup><col><col><col></colgroup>
                     {% for row in matrix_result %}
                         {% if forloop.counter0 == 2 or forloop.counter0 == 5 %} 
                             <tr class="trx">
@@ -27,17 +31,30 @@
                         {% endfor %}
                         </tr>
                     {% endfor %}
-            </table>
-        </div>
+                </table>
+                <div class="child_solve">
+                    <button class="button green" type="button" name="Solve" disabled>Solve</button>
+                </div>
+            </form>
+    
+            <div class="view-input">
+                <div class="child_upload">
+                    <form method = "post" enctype="multipart/form-data" class="choose_bnt">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                    <button class="button red upload_bnt" type="submit" name="input_image_upload">Upload</button>
+                    </form>
+                </div>
+
+                <div class="child_newinput">
+                    <form method = "get" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <button class="button red" type="submit" name="NewInput">NewInput</button>
+                    </form>
+                </div>
+            </div>
     </div>
-    <div>
-    <button class="button" type="submit" name="Solve">Solve</button>
-    <form method = "post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" name="input_image_upload">Upload</button>
-    </form>
-    </div>
+
 </body>
 
 </html>
