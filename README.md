@@ -78,11 +78,20 @@ python manage.py startapp hello
 python -m pip install Pillow
 
 # III. Algorithm Framework
-1. Numpy
+1. Python (3.7.15)
+sudo yum install python3
+
+2. Numpy (1.21.6)
 pip install numpy
 
-2. opencv
+3. opencv (4.7.0.68)
 pip3 install opencv-python
 
-3. boto3
+4. boto3
 pip install boto3
+
+5. AWS configuration
+aws configure
+aws_access_key_id = YOUR_ACCESS_KEY
+aws_secret_access_key = YOUR_SECRET_KEY
+region=us-east-1

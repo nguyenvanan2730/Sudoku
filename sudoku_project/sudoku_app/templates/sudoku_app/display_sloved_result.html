@@ -27,11 +27,12 @@
                         {% endif %}
 
                         {% for cell in row %}
-                            <td {% if cell.input %}class="output"{% else %}class="input"{% endif %}>{{ cell.value }}</td>
+                            <td {% if cell.input %}class="output" {% else %}class="input"{% endif %}>{{ cell.value }}</td>
                         {% endfor %}
                         </tr>
                     {% endfor %}
                 </table>
+
                 <div class="child_solve">
                     <button class="button green" type="button" name="Solve" disabled>Solve</button>
                 </div>

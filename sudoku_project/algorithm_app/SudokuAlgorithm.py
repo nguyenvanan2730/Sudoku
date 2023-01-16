@@ -115,9 +115,9 @@ def soduku_algorithm(number_matrix):
             print(number_matrix[i][:])
     else:
         print ("There are no solution for this Soduko")
-        return 0,False
+        return False, number_matrix
 
     stop = datetime.now()
     print('Stop solve sudoku at: ',stop)
     print(f'Time to solve is: ',stop-start, 's')
-    return number_matrix
+    return True, number_matrix

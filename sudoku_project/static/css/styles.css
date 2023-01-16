@@ -46,6 +46,7 @@ h2{
     width: 450px;
     position: relative;
     margin: 0px auto;
+    top: 15px;
     }
 
 .button 
@@ -143,7 +144,7 @@ h2{
     color: rgb(50, 155, 173);
     font-size: x-large;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    /* border: solid thin black; */
+    /* border: solid thin rgb(225, 44, 44); */
 }
 
 .input{
@@ -151,4 +152,12 @@ h2{
     font-size: x-large;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     /* border: solid thin black; */
+}
+
+#alert-unsolved{
+    text-align: center;
+    background-color: orange;
+    left: 50%;
+
+    color: red;
 }
