@@ -29,3 +29,69 @@
 1.2 Print the result to the screen
 
 This was add to check the push command.
+
+
+# GIT command
+1.1 Create a branch
+git branch feature/annv/add-django
+
+1.2 Switch to a branch
+git switch feature/annv/add-django
+
+1.3 Add file before commit
+git add file_name
+git add -A (add all)
+
+1.4 Commit
+git commit -m "message"
+
+1.5 Push commit to remote respo
+git push origin branch_name
+
+
+# Django create project
+I. Setup Virtual Enviroment
+1.1 Create a project environment
+python3 -m venv .venv
+source .venv/bin/activate
+
+1.2 Update pip in the virtual environment
+python -m pip install --upgrade pip
+
+1.3 Install Django in the virtual environment
+python -m pip install django
+
+II. Create the Django Project
+1.1 Create the project
+django-admin startproject project_name
+
+1.2 Create an empty development databas
+python manage.py migrate
+
+1.3 Run Server
+python manage.py runserver
+
+1.4 Create Django App
+python manage.py startapp hello
+
+1.5 To use ImageField, have to install Pillow
+python -m pip install Pillow
+
+# III. Algorithm Framework
+1. Python (3.7.15)
+sudo yum install python3
+
+2. Numpy (1.21.6)
+pip install numpy
+
+3. opencv (4.7.0.68)
+pip3 install opencv-python
+
+4. boto3
+pip install boto3
+
+5. AWS configuration
+aws configure
+aws_access_key_id = YOUR_ACCESS_KEY
+aws_secret_access_key = YOUR_SECRET_KEY
+region=us-east-1
