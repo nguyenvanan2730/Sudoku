@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-f*8g8k&se6-&7sj%tq5ak!jzeaetmhr=snlarjs73)3b84ttbq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['54.65.38.242']
 
 
 # Application definition
@@ -130,20 +130,5 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Using for image upload
-# MEDIA_ROOT =  "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/sudoku_project/sudoku_app/media"
-# MEDIA_URL = '/image/'
-
-# import environ
-# env = environ.Env()
-# env.read_env('.env')
-
-import environ
-# Initialise environment variables
-env = environ.Env()
-
-# Set the project base directory
-# Take environment variables from .env file
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-
-MEDIA_ROOT = env('MEDIA_ROOT')
-MEDIA_URL = env('MEDIA_URL')
+MEDIA_ROOT =  "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/sudoku_project/sudoku_app/media"
+MEDIA_URL = '/image/'
