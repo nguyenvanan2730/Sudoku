@@ -223,3 +223,4 @@ ALLOWED_HOSTS = ['54.65.38.242']
 ssh -i pro-sudoku.pem ec2-user@54.65.38.242
 
 ### environ
+python -m pip install django-environ
