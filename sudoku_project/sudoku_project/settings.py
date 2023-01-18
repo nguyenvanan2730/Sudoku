@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-f*8g8k&se6-&7sj%tq5ak!jzeaetmhr=snlarjs73)3b84ttbq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['54.65.38.242']
 
 
 # Application definition
@@ -130,6 +130,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Using for image upload
+
 # MEDIA_ROOT =  "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/sudoku_project/sudoku_app/media"
 # MEDIA_URL = '/image/'
 
