@@ -2,6 +2,9 @@ from re import I
 import cv2
 import numpy as np
 import os
+import environ
+
+env=environ.Env()
 #url = "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/Input-image-example/sudoku-image-example-level64.jpeg"
 #file_name=os.path.splitext(os.path.basename(url))[0]
 #1. Import the image
@@ -141,7 +144,11 @@ def image_transform(image,corners,file_path):
     img_crop = cv2.resize(img_crop,(450,450))
     
     file_name=os.path.splitext(os.path.basename(file_path))[0]
-    cv2.imwrite("/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/crop-input-image/%s.png"%file_name,img_crop)
+    img_path = env('IMAGE_TRANSFORM_CROP')
+    save_path=img_path + file_name + '.png'
+    #cv2.imwrite("/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/Images/crop-input-image/%s.png"%file_name,img_crop)
+    cv2.imwrite(save_path,img_crop)
+
     #create logic check image had or not.
     return file_name
 

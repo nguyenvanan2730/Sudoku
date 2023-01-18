@@ -176,7 +176,7 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
 pip install numpy
 
 2. opencv (4.6.0.66) // using other version will make error
-pip3 install opencv-python=4.6.0.66
+pip3 install opencv-python==4.6.0.66
 
 Show opencv version
 pip3 show opencv-python
@@ -217,3 +217,7 @@ python3 manage.py runserver 0.0.0.0:8000
 
 Have to add public IP to ALLOWED_HOSTS in settings.py
 ALLOWED_HOSTS = ['54.65.38.242']
+
+
+### Login Server
+ssh -i pro-sudoku.pem ec2-user@54.65.38.242
