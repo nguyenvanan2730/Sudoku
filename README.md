@@ -221,3 +221,5 @@ ALLOWED_HOSTS = ['54.65.38.242']
 
 ### Login Server
 ssh -i pro-sudoku.pem ec2-user@54.65.38.242
+
+### environ
