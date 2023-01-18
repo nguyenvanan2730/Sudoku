@@ -131,6 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Using for image upload
 
+
 # MEDIA_ROOT =  "/Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku/sudoku_project/sudoku_app/media"
 # MEDIA_URL = '/image/'
 
