@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import environ
+env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-f*8g8k&se6-&7sj%tq5ak!jzeaetmhr=snlarjs73)3b84ttbq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['54.65.38.242']
+ALLOWED_HOSTS = env('ALLOWED_HOSTS')
 
 
 # Application definition
@@ -118,7 +120,7 @@ USE_TZ = True
 
 #STATIC_URL = 'static/'
 import os
-STATIC_ROOT = ''
+STATIC_ROOT = env('STATIC_ROOT')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
@@ -139,9 +141,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # env = environ.Env()
 # env.read_env('.env')
 
-import environ
-# Initialise environment variables
-env = environ.Env()
+
 
 # Set the project base directory
 # Take environment variables from .env file

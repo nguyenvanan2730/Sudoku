@@ -221,6 +221,38 @@ ALLOWED_HOSTS = ['54.65.38.242']
 
 ### Login Server
 ssh -i pro-sudoku.pem ec2-user@54.65.38.242
+ssh -i /Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku-info/pro-sudoku/pro-sudoku.pem ec2-user@54.65.38.242
+
+source venv/bin/activate
+
+uwsgi --http :8000 --module /home/ec2-user/sudoku/sudoku_project.wsgi
+
 
 ### environ
 python -m pip install django-environ
+
+## How to deploy Django application on AWS Ubuntu EC2 with Nginx and uWSGI
+
+Error:
+2023/01/19 02:13:43 [error] 28359#28359: *342 open() "/usr/share/nginx/html/.env" failed (2: No such file or directory), client: 135.125.246.189, server: _, request: "GET /.env HTTP/1.1", host: "54.65.38.242"
+
+.env in production
+MEDIA_ROOT=/home/ec2-user/sudoku/sudoku_project/sudoku_app/media
+MEDIA_URL=/image/
+IMAGE_UPLOAD_PATH=/home/ec2-user/sudoku/Images/crop-input-image
+IMAGE_TRANSFORM_CROP=/home/ec2-user/sudoku/Images/crop-input-image
+
+/home/ec2-user/sudoku/sudoku_project/sudoku_app/media
+/home/ec2-user/sudoku/sudoku_project/static
+/home/ec2-user/uwsgi_params;
+
+To verify that Django is installed, enter the following.
+pip freeze
+
+MEDIA_ROOT=/home/ec2-user/sudoku/sudoku_project/sudoku_app/media
+MEDIA_URL=/image/
+IMAGE_UPLOAD_PATH=/home/ec2-user/sudoku/Images/crop-input-image
+IMAGE_TRANSFORM_CROP=/home/ec2-user/sudoku/Images/crop-input-image
+STATIC_ROOT＝/home/ec2-user/sudoku/sudoku_project/static
+DEBUG＝FALSE
+ALLOWED_HOSTS=['3.114.77.145']
