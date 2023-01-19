@@ -11,10 +11,18 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import os
+import environ
+env = environ.Env()
+# Set the project base directory
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -23,10 +31,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-f*8g8k&se6-&7sj%tq5ak!jzeaetmhr=snlarjs73)3b84ttbq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['54.65.38.242']
-
+DEBUG = env('DEBUG')
+#DEBUG=True
+#ALLOWED_HOSTS = env('ALLOWED_HOSTS')
+#ALLOWED_HOSTS=['']
 
 # Application definition
 
@@ -117,7 +125,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 #STATIC_URL = 'static/'
-import os
+
+#STATIC_ROOT = env('STATIC_ROOT')
 STATIC_ROOT = ''
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
@@ -138,14 +147,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # import environ
 # env = environ.Env()
 # env.read_env('.env')
-
-import environ
-# Initialise environment variables
-env = environ.Env()
-
-# Set the project base directory
-# Take environment variables from .env file
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 MEDIA_ROOT = env('MEDIA_ROOT')
 MEDIA_URL = env('MEDIA_URL')
