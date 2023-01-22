@@ -1,2 +1,5 @@
 .env
 Images
+.vscode
+.ipynb_checkpoints
+__pycache__
