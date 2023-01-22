@@ -46,7 +46,7 @@ def recognize_number(s3path):
                 recognize_list.append(recognize_value)
                 
                 # Coutn the word block (for test)
-                count=count+1;
+                count=count+1
     print(f"Total of the number is:{count}")
     #print(matrix)
     print("The left_list is: ",left_list)
