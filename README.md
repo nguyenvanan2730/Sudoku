@@ -221,7 +221,11 @@ ALLOWED_HOSTS = ['54.65.38.242']
 
 ### Login Server
 ssh -i pro-sudoku.pem ec2-user@54.65.38.242
-ssh -i /Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku-info/pro-sudoku/pro-sudoku.pem ec2-user@54.65.38.242
+ssh -i /Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku-info/pro-sudoku/pro-sudoku.pem ec2-user@3.114.77.145
+
+ssh -i /Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku-info/pro-sudoku/pro-sudoku.pem ubuntu@3.114.77.145
+
+ssh -i /Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku-info/pro-sudoku/pro-sudoku.pem ubuntu@ec2-52-68-221-167.ap-northeast-1.compute.amazonaws.com
 
 source venv/bin/activate
 
@@ -253,6 +257,6 @@ MEDIA_ROOT=/home/ec2-user/sudoku/sudoku_project/sudoku_app/media
 MEDIA_URL=/image/
 IMAGE_UPLOAD_PATH=/home/ec2-user/sudoku/Images/crop-input-image
 IMAGE_TRANSFORM_CROP=/home/ec2-user/sudoku/Images/crop-input-image
-STATIC_ROOT＝/home/ec2-user/sudoku/sudoku_project/static
-DEBUG＝FALSE
+STATIC_ROOT=/home/ec2-user/sudoku/sudoku_project/static
+DEBUG=FALSE
 ALLOWED_HOSTS=['3.114.77.145']

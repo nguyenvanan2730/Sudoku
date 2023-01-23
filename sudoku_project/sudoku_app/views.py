@@ -8,6 +8,7 @@ from django.contrib import messages
 
 # Create your views here.
 def sudoku_image_input_view(request):
+
     if request.method == 'POST':
         if 'input_image_upload' in request.POST:
             form = Sudoku_input_imageForm(request.POST, request.FILES)
@@ -16,17 +17,35 @@ def sudoku_image_input_view(request):
                 a = form.save()
                 file_path= a.sudoku_image_upload.file.name
                 print(f'The file_path name is:', file_path)
-                reg_matrix = MainProgram.mainProgram(file_path)
-                return render(request,'sudoku_app/display_sudoku_result2.html', {'reg_matrix': reg_matrix, 'form': form})
+                check,reg_matrix = MainProgram.mainProgram(file_path)
+
+                if check!=False:
+                    messages.info(request,"Please check the recognized result again")
+                    return render(request,'sudoku_app/display_sudoku_result2.html', {'reg_matrix': reg_matrix, 'form': form})
+                else:
+                    reg_matrix=[[0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0, 0, 0, 0, 0]]
+                    messages.error(request, "Cannot recognize the uploaded image")
+                    #return(request,'sudoku_app/display_sudoku_result2.html', {'reg_matrix': reg_matrix, 'form': form})
+                    return render(request, 'sudoku_app/display_sudoku_result2.html', {'reg_matrix': reg_matrix,'form': form})
 
         elif 'Solve' in request.POST:
             # matrix = np.zeros((9,9), dtype=int)
             # matrix_input =  matrix.tolist()
-            matrix_input=np.zeros((9,9), dtype=int);
+            matrix_input=np.zeros((9,9), dtype=int)
             validate=["1","2","3","4","5","6","7","8","9"]
             #register a form
             form = Sudoku_input_imageForm()
 
+            #Check validation for Input
+            #Just accept number from 1 to 9
             inputfail=False
             for row in range(0,9):
                 for col in range(0,9):
@@ -35,6 +54,17 @@ def sudoku_image_input_view(request):
                         if (request.POST.get(element) in validate):
                             matrix_input[row][col] = request.POST.get(element)
                         else:    
+                            inputfail =True
+
+            #Input matrix not follow the rule (colom, row, box)
+            matrix_valid=matrix_input.copy()
+            for row in range(0,9):
+                for col in range(0,9):
+                    if matrix_valid[row][col] != 0:
+                        number=matrix_valid[row][col]
+                        matrix_valid[row][col]=0
+                        check= SudokuAlgorithm.check_number_location(matrix_valid,row,col,number)            
+                        if check==False:
                             inputfail =True
 
             print('matrix_input',matrix_input)
@@ -49,7 +79,7 @@ def sudoku_image_input_view(request):
                         else:
                             reg_matrix[row][col]=0
 
-                messages.error(request, "Please input the number from 1 to 9")
+                messages.error(request, "The input sudoku is not correct.")
                 print(f'reg_matrix is: ',reg_matrix)
                 return render(request,'sudoku_app/display_sudoku_result2.html', {'reg_matrix': reg_matrix, 'form': form})
 
