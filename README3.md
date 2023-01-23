@@ -243,6 +243,7 @@ systemctl start emperor.uwsgi.service
 
 systemctl status emperor.uwsgi.service
 systemctl stop emperor.uwsgi.service
+systemctl restart emperor.uwsgi.service
 
 Follow the instruction at:
 https://tonyteaches.tech/django-nginx-uwsgi-tutorial/
