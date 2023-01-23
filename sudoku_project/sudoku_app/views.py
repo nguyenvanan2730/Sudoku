@@ -138,4 +138,5 @@ def sudoku_image_input_view(request):
                     [0, 0, 0, 0, 0, 0, 0, 0, 0],
                     [0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
-        return render(request, 'sudoku_app/display_sudoku_result2.html', {'reg_matrix': reg_matrix,'form': form})
+       #return render(request, 'sudoku_app/display_sudoku_result2.html', {'reg_matrix': reg_matrix,'form': form})
+        return render(request, 'sudoku_app/index.html')

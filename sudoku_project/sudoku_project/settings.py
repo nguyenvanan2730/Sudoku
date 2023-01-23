@@ -126,8 +126,8 @@ USE_TZ = True
 
 #STATIC_URL = 'static/'
 
-#STATIC_ROOT = env('STATIC_ROOT')
-STATIC_ROOT = '/home/ubuntu/static'
+STATIC_ROOT = env('STATIC_ROOT')
+#STATIC_ROOT = '/home/ubuntu/static'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
