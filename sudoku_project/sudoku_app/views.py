@@ -140,3 +140,19 @@ def sudoku_image_input_view(request):
 
         return render(request, 'sudoku_app/display_sudoku_result2.html', {'reg_matrix': reg_matrix,'form': form})
         #return render(request, 'sudoku_app/index.html',{'reg_matrix': reg_matrix,'form': form})
+
+
+def sudoku_introduction(request):
+    return render(request, 'sudoku_app/introduction.html')
+
+# def sudoku_home(request):
+#     return redirect(request, 'sudoku_app/display_sudoku_result2.html')
+
+def sudoku_imageuploadrule(request):
+    return render(request, 'sudoku_app/imageuploadrule.html')
+
+def sudoku_systemarchitect(request):
+    return render(request, 'sudoku_app/systemarchitect.html')
+
+def sudoku_resultandimprovement(request):
+    return render(request, 'sudoku_app/resultandimprovement.html')
