@@ -247,3 +247,21 @@ systemctl restart emperor.uwsgi.service
 
 Follow the instruction at:
 https://tonyteaches.tech/django-nginx-uwsgi-tutorial/
+
+# XI. Operation command
+
+1. Login to EC2
+ ssh -i /Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku-info/pro-sudoku/pro-sudoku.pem ubuntu@ec2-52-68-221-167.ap-northeast-1.compute.amazonaws.com
+
+ 2. active virtual enviroment
+ source venv/bin/activate
+
+ 3. Pull code from master
+ git pull origin master
+
+ 4. Restart uWSGI
+ sudo systemctl restart emperor.uwsgi.service
+
+ 5. Restart Nginx
+ sudo service nginx restart
+
