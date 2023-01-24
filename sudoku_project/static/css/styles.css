@@ -4,7 +4,7 @@ colgroup, tbody { border: solid medium; }
 td { border: solid thin; height: 50px; width: 50px; text-align: center; padding: 0; }
 
 td input[type="text"]{
-        height: 43px; 
+        height: 43px;
         width: 43px;
         text-align:center; 
         padding: 0; 
@@ -27,8 +27,13 @@ td input[type="text"]{
         }
 
 .conternai{
-    background-color: rgba(243, 242, 242, 0.37);
+    /* background-color: rgba(78, 201, 37, 0.37);
+    margin: 0px auto; */
+    position: relative;
+    height: 600px;
+    width: 450px;
     margin: 0px auto;
+    /* background-color: aqua; */
 }
 
 h2{
@@ -42,16 +47,16 @@ h2{
 .center-div {
     display: flex; 
     justify-content: center; 
-    height: 450px;
+    height: 510px;
     width: 450px;
     position: relative;
-    margin: 0px auto;
-    top: 15px;
+    /* top: 80px; */
+    /* border: 1px solid red; */
     }
 
 .button 
 {
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
     align-items: center;
     cursor: pointer;
@@ -60,9 +65,8 @@ h2{
     border-radius: 8px;
     transition: background-color 0.3s ease;
     cursor: pointer;
-    height: 50px;
+    height: 45px;
     width: 100px;
-
     border: 0.5px white;
 }
 
@@ -79,7 +83,7 @@ h2{
   }
 
 .red{
-    background-color: rgb(248, 4, 4);
+    background-color: rgb(218, 148, 63);
 }
 
 .red:hover {background-color: #ae1d1d}
@@ -90,51 +94,46 @@ h2{
     transform: translateY(2px);
   }
 
-  .red:disabled{
+.red:disabled{
     background-color: #f5efee;
-  }
+}
 
 .parent {
     border: 1px solid red;
 }
 
 .child_solve {
-    /* border: 1px solid red; */
     position: absolute; 
-    margin: 0px auto;
-    bottom: -60px;
+    bottom: 0px;
+    right: 0px;
     }
-
-.view-input{
-    position: absolute;
-    left: 460px;
-    width: 70px;
-}
 
 .child_upload {
     display: block;
-    /* border: 0.5px solid red; */
-    position: fixed;
-    top: 350px;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    /* border: 0.5px solid rgb(17, 0, 255); */
+}
+.file_upload{
+position: absolute;
+bottom: -50px;
+left: 0px;
+/* border: 1px solid red; */
 }
 
 .child_newinput{
-    display: block;
-    position: fixed;
-    top: 90px;
-}
-
-/* .upload_bnt{
+    /* display: block; */
     position: absolute;
     bottom: 0px;
-    margin: 0px 0px;
-    padding: 0px 0px; 
-    /* border: 0.5px solid red; 
-} */
+    margin: 0px auto;
+    /* border: 0.5px solid rgb(55, 22, 153); */
+}
 
 .choose_bnt{
     position: absolute;
-    left: 30%;
+    bottom: 0;
+    left: 0;
     margin: 0px 0px;
     padding: 0px 0px;
     /* border: 0.5px solid red; */

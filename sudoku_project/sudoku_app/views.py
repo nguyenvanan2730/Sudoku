@@ -20,7 +20,7 @@ def sudoku_image_input_view(request):
                 check,reg_matrix = MainProgram.mainProgram(file_path)
 
                 if check!=False:
-                    messages.info(request,"Please check the recognized result again")
+                    messages.info(request,"Please confirm the recognized result before solving")
                     return render(request,'sudoku_app/display_sudoku_result2.html', {'reg_matrix': reg_matrix, 'form': form})
                 else:
                     reg_matrix=[[0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -139,3 +139,20 @@ def sudoku_image_input_view(request):
                     [0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
         return render(request, 'sudoku_app/display_sudoku_result2.html', {'reg_matrix': reg_matrix,'form': form})
+        #return render(request, 'sudoku_app/index.html',{'reg_matrix': reg_matrix,'form': form})
+
+
+def sudoku_introduction(request):
+    return render(request, 'sudoku_app/introduction.html')
+
+# def sudoku_home(request):
+#     return redirect(request, 'sudoku_app/display_sudoku_result2.html')
+
+def sudoku_imageuploadrule(request):
+    return render(request, 'sudoku_app/imageuploadrule.html')
+
+def sudoku_systemarchitect(request):
+    return render(request, 'sudoku_app/systemarchitect.html')
+
+def sudoku_resultandimprovement(request):
+    return render(request, 'sudoku_app/resultandimprovement.html')

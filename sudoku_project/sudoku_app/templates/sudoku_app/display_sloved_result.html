@@ -1,18 +1,21 @@
+{%extends 'sudoku_app/index.html' %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>SUDOKU SOLVER</title>
 </head>
-<body>
-
+<body> -->
+{% block content %}
     <div class="conternai">
-        <h2>SUDOKU SOLVER</h2>
+        <h2 style="font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        margin: 30px auto;">SUDOKU SOLVER</h2>
 
         <div class="center-div">
+            <div style="font-size: 0;">hidden</div>
             <form method = "post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <table>
@@ -32,30 +35,28 @@
                         </tr>
                     {% endfor %}
                 </table>
-
                 <div class="child_solve">
-                    <button class="button green" type="button" name="Solve" disabled>Solve</button>
+                    <button class="button green" type="submit" name="Solve">Solve</button>
                 </div>
             </form>
-    
-            <div class="view-input">
-                <div class="child_upload">
-                    <form method = "post" enctype="multipart/form-data" class="choose_bnt">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                    <button class="button red upload_bnt" type="submit" name="input_image_upload">Upload</button>
-                    </form>
-                </div>
 
-                <div class="child_newinput">
-                    <form method = "get" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <button class="button red" type="submit" name="NewInput">NewInput</button>
-                    </form>
-                </div>
+            <!-- <div class="child_upload"> -->
+            <form method = "post" enctype="multipart/form-data" class="choose_bnt">
+                <button class="button red child_upload" type="submit" name="input_image_upload">Upload</button>
+                {% csrf_token %}
+                <div class="file_upload">{{ form.as_p }}</div>
+            </form>
+            <!-- </div> -->
+
+            <div class="child_newinput">
+                <form method = "get" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <button class="button red" type="submit" name="NewInput">New Input</button>
+                </form>
             </div>
+        </div> 
     </div>
+{% endblock %}
+<!-- </body>
 
-</body>
-
-</html>
+</html> -->
