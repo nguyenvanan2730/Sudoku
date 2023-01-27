@@ -22,8 +22,8 @@ def upload_file(file_name):
     local_file_url=path+file_name+'.png'
     s3 = boto3.resource('s3')
 
-    #Count the number of object in 'dev-sudoku-user-input-image' budget
-    my_bucket = s3.Bucket('dev-sudoku-user-input-image')
+    #Count the number of object in 'sudoku-user-upload-image-3033' budget
+    my_bucket = s3.Bucket('sudoku-user-upload-image-3033')
     count_obj=int(0)
     for my_bucket_object in my_bucket.objects.all():
         count_obj+=1   
@@ -32,7 +32,7 @@ def upload_file(file_name):
     #File name of the image in budget
     obj_name='user-input-image-'+str(count_obj+1)+'.png'
     try:
-        s3.meta.client.upload_file(local_file_url, 'dev-sudoku-user-input-image', obj_name)
+        s3.meta.client.upload_file(local_file_url, 'sudoku-user-upload-image-3033', obj_name)
         print("Successfully upload the image to S3:",file_name)
         return obj_name
     except:
