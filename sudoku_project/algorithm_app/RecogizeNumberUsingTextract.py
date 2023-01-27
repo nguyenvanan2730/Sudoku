@@ -3,7 +3,7 @@ import boto3
 
 
 def recognize_number(s3path):
-    budget = "dev-sudoku-user-input-image"
+    budget = "sudoku-user-upload-image-3033"
     name = s3path
     client = boto3.client('textract')
     response = client.detect_document_text(
