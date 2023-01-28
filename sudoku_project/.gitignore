@@ -3,3 +3,6 @@ db.sqlite3
 mysite.sock
 uwsgi_params
 media/
+algorithm_app/__pycache__/
+algorithm_app/migrations/
+__pycache__/

@@ -1,5 +1,40 @@
 {%extends 'sudoku_app/index.html' %}
 
 {% block content %}
-<h2>This is the content of systemarchitect</h2>
+<h2>System Architecture</h2>
+<h4>Sudoku Processing Flow</h4>
+<ol>
+    <li>User upload a Sudoku Image through a web interface of mobile application.</li>
+    <li>The image is processed by OpenCV to detect the outer border of the sudoku puzzle and crop the image to focus on the puzzle only.</li>
+    <li>The cropped image is then uploaded to S3 for further processing.</li>
+    <li>Textract is used to recognized and extract number from the image in S3 bucket, and sends the recognized result back to EC2 instance.</li>
+    <li>Base on the recognized number and location of each number, EC2 instance creates sudoku grip to be displayed on the screen.</li>
+    <li>When “Solve” button is pressed, EC2 receives the sudoku grid as a input and arrange it as a matrix 9x9.</li>
+    <li>A Backtracking algorithm is applied to find the solution of the sudoku puzzle.</li>
+    <li>The solution is sent back to the user and displayed on the screen, with the original input numbers and the solution numbers is separated  by color.</li>
+</ol>
+
+<h4>AWS Cloud Architecture</h4>
+<p>The diagram below presents infrastructure of sudoku project on AWS Cloud. This basic architect can keep with reliable and scaling ability. The service is used contain of: Route53, WAF, CloudFront, ALB, EC2, S3, Textract.</p>
+<div style="text-align: center;">
+    <img src="./static/image/AWS-architect.svg" alt="AWS Cloud Architecture" style="width: 70%;height: auto;">
+</div>
+<br>
+<ul>
+    <li>EC2: This project is hosted on EC2 within a Auto Scaling Group, can be scale base on the number requests. This architect ensure the reliable of service. EC2 is attached a IAM role which enable a ability to reach S3 and Textract for further process. OpenCV library is used for detect sudoku area in the image. EC2 is placed in a security group which accept request only from ALB.</li>
+    <li>ALB: This service make sure these coming requests are balance routing to each EC2 in the autoscaling group. Also, improve security of the application by using latest SSL/TLS.</li>
+    <li>S3: Provided storage for store processed image which be used for number recognize in Textract. User uploaded image will be detect and crop in the EC2, the result include only sudoku area is uploaded to S3. These image will be moved to S3 Glacier for archive after a cycle period. This method provides advantage to keep storage in low-cost.</li>
+    <li>Textract: This is a machine learning service on AWS, enable to detect document text in high accuracy. In this case, the number in sudoku image will be recognized. Textract’s response include number value and location relative which enable to confirm location of the number on the grid. Boto3 library is used to make request and receive response with Textract.</li>
+    <li>Route53: Hosted the sudokusolver.click domain name. Route53 is high availability and scalability, can handle high levels of traffic and automatically route users to the closet available endpoint for optimal performance. Also, by integrates with c CloudFront to provide additional security for the domain name and resources.</li>
+    <li>CloudFront: Distribute content to user with low latency and high data transfer speeds.</li>
+    <li>WAF: monitors and filters income HTTP/HTTPs traffic, blocks or allows request based on a set of predefined rules. Using AWS WAF with CloudFront can protect application from variety of threats, and improve the reliability.</li>
+</ul>
+
+
+
+
+
+
+
+
 {% endblock %}

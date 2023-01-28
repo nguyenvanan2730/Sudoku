@@ -1,5 +1,40 @@
 {%extends 'sudoku_app/index.html' %}
 
 {% block content %}
-<h2>This is the content of resultandimprovement</h2>
+<h2>Result and Improvement </h2>
+<h4>Result</h4>
+    <p>This project has successfully applied a "Backtracking" algorithm to solve Sudoku puzzles. It can solve puzzles of varying difficulty levels, from easy to hard, within one second. The project uses OpenCV to detect and automatically import the Sudoku grid, and Textract to extract numbers with a high level of accuracy (99%).</p>
+    <p>This project is architected on the AWS Cloud, which provides high availability and scalability. The EC2 auto-scaling feature is used to adjust resources based on the number of requests. The web interface utilizes the Bootstrap library to make it more user-friendly.</p>
+<h4>Improvement</h4>
+    <h6>Algorithm </h6>
+        <p>"Backtracking" is a simple algorithm that does not guarantee a solution for the Sudoku problem within a limited time. For example, for very hard level Sudoku puzzles, it can take up to 2 minutes to solve.</p>
+        <p>Consider using other methods, such as Constraint propagation or Heuristics, to optimize the Backtracking Algorithm. Another efficient algorithm for solving sudoku problem is Dancing links X algorithm.</p>
+        <div style="text-align: center;">
+        <pre>   
+[[0 0 0 0 0 0 3 0 0]
+ [0 7 0 0 6 0 0 0 4]
+ [0 0 0 0 0 0 5 0 1]
+ [1 0 3 0 0 0 0 0 0]
+ [0 0 0 0 8 0 7 0 0]
+ [0 0 0 0 0 0 0 4 0]
+ [0 0 0 1 0 3 0 0 0]
+ [0 8 0 0 0 5 0 2 0]
+   [0 0 0 2 0 0 0 0 0]] 
+        </pre>
+        
+        </div>
+        <p>The above is an example of a very hard level of Sudoku puzzle.</p>
+
+    <h6>Recognize</h6>
+        <ul>There are two issues with the recognition of the uploaded image: incorrect placement of recognized numbers and recognize of incorrect numbers.
+            <li>Incorrect placement: the location of the number in the grid is determined base on the calculation of the number’s location in recognized result. In case of slanted image, misplacement often occurs. </li>
+            <li>Incorrect recognize number:  The result of number extraction are dependent on the input quality of the images and the and the pre-processing of the image. To improve the recognition result, follow the image upload rule and. Pre-processing of the image to be determined the location of numbers, but change image format. Improve pre-processing image will provided more accurate recognition.</li>       
+        </ul>
+
+<h4>Conclusion</h4>
+<p>In conclusion, this project has successfully developed a solution for solving Sudoku puzzles using Backtracking algorithm and AWS Cloud services. This algorithm has solved puzzles of varying difficulty levels, and high level of accuracy in number extraction. However, in order to effectively handle high-level, both the solving algorithm and number recognition must be improved.</p>
+
+
+
+
 {% endblock %}
