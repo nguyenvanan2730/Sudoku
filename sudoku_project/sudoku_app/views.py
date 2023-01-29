@@ -148,8 +148,8 @@ def sudoku_introduction(request):
 # def sudoku_home(request):
 #     return redirect(request, 'sudoku_app/display_sudoku_result2.html')
 
-def sudoku_imageuploadrule(request):
-    return render(request, 'sudoku_app/imageuploadrule.html')
+def sudoku_EC2deployguide(request):
+    return render(request, 'sudoku_app/EC2deployguide.html')
 
 def sudoku_systemarchitect(request):
     return render(request, 'sudoku_app/systemarchitect.html')

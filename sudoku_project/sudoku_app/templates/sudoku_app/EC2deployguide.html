@@ -1,0 +1,409 @@
+{%extends 'sudoku_app/index.html' %}
+
+{% block content %}
+<style>
+	pre{
+		position: relative;
+		left: 10;
+		background-color: rgb(209, 207, 207);
+		text-align: left !important;
+		width: 800px;
+		margin: 0px 0px;	}
+</style>
+
+<h2>Deploy Django Project on EC2 using Nginx and uWSGI</h2>
+
+<p>Nginx is a high-performance web server that can handle a large number of requests efficiently. uWSGI is a fast and efficient application server that is well-suited for running Django applications. EC2 allows for easy scalability by enabling to scale application horizontally by adding or removing instances. This guide demonstrates how to deploy a Django project on EC2 using Nginx and uWSGI.</p>
+
+<h3>I. Create EC2 Ubuntu on AWS</h3>
+
+<ol>
+  <li>On AWS, create EC2 name “<strong>sudoku-3033</strong>”, connect to EC2 through terminal by this below command. Make sure open port 8000 on security group for local test.
+  
+  <pre>
+  
+	ssh -i ~/sudoku-3033.pem ubuntu@ec2-18.XX.XX.147.ap-northeast-1.compute.amazonaws.com
+  </pre>
+  
+  <p>If the connection fail due to Permission, run below command for grant read and write the publickey.</p>
+  
+  <pre>
+    
+	chmod 600 /Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku-info/pro-sudoku/sudoku-3033.pem
+  </pre>
+  </li>
+  <li>After login in EC2, run below command for update package list.
+  <pre>
+
+	sudo apt update
+	sudo apt upgrade
+  </pre>
+  </li>
+</ol>
+
+<h3>II. Create Virtual Environment, and install necessary library</h3>
+
+<h4>Create Virtual Environment</h4>
+
+<ol>
+  <li>Install pip3:
+  <pre>
+
+	sudo apt install python3-pip
+  </pre>
+  </li>
+  <li>Install virtualenv for create virtual environment
+  <pre>
+
+	sudo apt install python3-virtualenv
+  </pre>
+  </li>
+  <li>Create virtual environment in root direction home/ubuntu
+  <pre>
+ 
+	virtualenv venv
+  </pre>
+  </li>
+  <li>Activate environment
+  <pre>
+
+	source venv/bin/activate
+  </pre>
+  <p>After the virtual environment is activated, the format on terminal will be display like: <strong>(venv) ubuntu@ip-10-0-4-232</strong>:</p>
+  </li>
+</ol>
+
+<h4>Clone project from GitHub</h4>
+  <ol>
+    <li>Update git using using version 2.34.1
+      <pre>
+
+	sudo apt install git
+      </pre>
+    </li>
+    <li>Clone source code from GitHub using "git clone and token"
+      <pre>
+
+	git clone https://nguyenvanan2730:&lt;token&gt;@github.com/nguyenvanan2730/sudoku.git
+      </pre>
+    </li>
+  </ol>
+
+<h4>Install necessary library</h4>
+  <ol>
+    <li>Django
+      <pre>
+
+	pip3 install django==4.1.4
+	pip3 show Django
+	-->4.1.4
+      </pre>
+    </li>
+    <li>Numpy
+      <pre>
+
+	pip3 install numpy==1.23.5
+	pip3 show numpy
+	-->=1.23.5
+      </pre>
+    </li>
+    <li>opencv
+      <pre>
+
+	pip3 install opencv-python==4.6.0.66
+	pip3 show opencv-python
+	-->4.6.0.66
+	sudo apt-get install libgl1-mesa-glx
+	--> Install this packages for successful import OpenCV
+      </pre>
+    </li>
+    <li>boto3
+      <pre>
+
+	pip3 install boto3==1.26.30
+	pip3 show boto3
+	--> 1.26.30
+      </pre>
+    </li>
+    <li>Pillow
+      <pre>
+
+	python3 -m pip install Pillow
+      </pre>
+    </li>
+    <li>django-environ
+      <pre>
+
+	python3 -m pip install django-environ
+      </pre>
+    </li>
+    <li>aws-cli
+      <pre>
+
+	sudo apt install awscli
+      </pre>
+    </li>
+  </ol>
+
+<h3>III. Setting Variable Environment</h3>
+  <ol>
+    <li>Create a .env file in the /home/ubuntu/venv/sudoku/sudoku_project
+      <pre>
+	
+	sudo nano **/home/ubuntu/venv/sudoku/sudoku_project/**.env
+      </pre>
+    </li>
+	<li>
+		Setting below content in the .env file
+		<pre>
+
+	MEDIA_ROOT=/home/ubuntu/venv/sudoku/sudoku_project/media
+	MEDIA_URL=/image/
+	IMAGE_UPLOAD_PATH=/home/ubuntu/venv/sudoku/Images/crop-input-image
+	IMAGE_TRANSFORM_CROP=/home/ubuntu/venv/sudoku/Images/crop-input-image
+	STATIC_ROOT=/home/ubuntu/static
+	DEBUG=FALSE
+	ALLOWED_HOSTS=18.XX.XX.147
+		</pre>
+		The static_root setting is the absolute filesystem path to the directory where all collected static files will be stored after running the collectstatic command. The collectstatic command is used to gather static files from various locations and place them in a single location for easier deployment and improved performance.
+	</li>
+	<li>
+		Create a .gitignore file and add .env into it, ensure that do not push these configure to the GitHub.
+		<pre>
+
+	.env
+	db.sqlite3
+	mysite.sock
+	uwsgi_params
+	media/
+		</pre>
+		Run below command, the screen should be display as http://18.XX.XX.147:8000
+		<pre>
+
+	python manage.py runserver 0.0.0.0:8000
+		</pre>
+	</li>
+  </ol>
+
+  <h3>IV. Deploy application on EC2 using Nginx and uWSGI</h3>
+  <h4>Install uWSGI into virtualenv</h4>
+  	<ol>
+		<li>Activate the virtual environment and run below command to install uWSGI.
+			<pre>
+
+	pip install uwsgi
+			</pre>
+			uWSGI will be located at /home/ubuntu/venv/lib/python3.10/site-packages. Can check if the uWSGI is installed by running  "pip freeze" or "pip3 show uWSGI"
+		</li>
+		<li>After uWSGI is successful installed, Django can be run by the following command. Access sever through the browser, application should be executed as run python3 manage.py runserver 0.0.0.0:8000 command.
+			<pre>
+
+	uwsgi --http :8000 --module sudoku_project.wsgi
+			</pre>
+			sudoku_project.wsgi is not a file but a reference to the application instance located in the wsgi.py file. As uWSGI was not yet configured to serve static files, the screen design may appear broken at this stage. In the next step, static files will be served using Nginx.
+		</li>
+	</ol>
+<h4>Configure Nginx as Web Server</h4>
+	<ol>
+		<li>Install and start Nginx using below command.
+			<pre>
+
+	sudo apt-get install nginx.     # install nginx
+	sudo service nginx start   # start nginx
+			</pre>
+	After Nginx is started, the message “Welcome to nginx” should be displayed at the address: http://18.XX.XX.147:80
+		</li>
+		<li>Configure Nginx for project
+			<p>Create a uwsgi_params file in ~/venv/ contains below configures.</p>
+			<pre>
+
+	uwsgi_param  QUERY_STRING       $query_string;
+	uwsgi_param  REQUEST_METHOD     $request_method;
+	uwsgi_param  CONTENT_TYPE       $content_type;
+	uwsgi_param  CONTENT_LENGTH     $content_length;
+
+	uwsgi_param  REQUEST_URI        $request_uri;
+	uwsgi_param  PATH_INFO          $document_uri;
+	uwsgi_param  DOCUMENT_ROOT      $document_root;
+	uwsgi_param  SERVER_PROTOCOL    $server_protocol;
+	uwsgi_param  REQUEST_SCHEME     $scheme;
+	uwsgi_param  HTTPS              $https if_not_empty;
+
+	uwsgi_param  REMOTE_ADDR        $remote_addr;
+	uwsgi_param  REMOTE_PORT        $remote_port;
+	uwsgi_param  SERVER_PORT        $server_port;
+	uwsgi_param  SERVER_NAME        $server_name;
+			</pre>
+			Create a mysite_nginx.conf in the /etc/nginx/sites-available/ directory.
+			<pre>
+
+	# mysite_nginx.conf
+
+	# the upstream component nginx needs to connect to
+	upstream django {
+		server unix:///home/ubuntu/venv/sudoku/sudoku_project/mysite.sock; # for a file socket
+		#server 127.0.0.1:8001;
+	}
+
+	# configuration of the server
+	server {
+		# the port your site will be served on
+		listen      8000;
+		# the domain name it will serve for
+		server_name 18.XX.XX.147; # substitute your machine's IP address or FQDN
+		charset     utf-8;
+
+		# max upload size
+		client_max_body_size 75M;   # adjust to taste
+
+		# Django media
+		location /media  {
+			alias /home/ubuntu/venv/sudoku/sudoku_project/media;  # your Django project>
+		}
+
+		location /static {
+			alias /home/ubuntu/venv/sudoku/sudoku_project/static; # your Django project>
+		}
+
+		# Finally, send all non-media requests to the Django server.
+		location / {
+			uwsgi_pass  django;
+			include     /home/ubuntu/venv/uwsgi_params; # the uwsgi_params file you ins>
+		}
+	}
+			</pre>
+
+		</li>
+		<li>
+			Run below command, uWSGI and Nginx should be serving as expected.
+			<pre>
+
+	uwsgi --socket mysite.sock --module sudoku_project.wsgi --chmod-socket=664
+			</pre>
+		</li>
+	</ol>
+
+<h4>Configuring uWSGI to run with a .ini file</h4>
+	<ol>
+		<li>Create a file call mysite_uwsgi.ini  in the ~/venv/ direction
+			<pre>
+
+	# mysite_uwsgi.ini file
+	[uwsgi]
+
+	# Django-related settings
+	# the base directory (full path)
+	chdir           = /home/ubuntu/venv/sudoku/sudoku_project
+	# Django's wsgi file
+	module          = sudoku_project.wsgi
+	# the virtualenv (full path)
+	home            = /home/ubuntu/venv
+
+	# process-related settings
+	# master
+	master          = true
+	# maximum number of worker processes
+	processes       = 10
+	# the socket (use the full path to be safe
+	socket          = /home/ubuntu/venv/sudoku/sudoku_project/mysite.sock
+	# ... with appropriate permissions - may be needed
+	chmod-socket    = 664
+	# clear environment on exit
+	vacuum          = true
+			</pre>
+		</li>
+		<li>
+			And Run uwsgi using this file, the same result will be displayed on the screen.
+			<pre>
+
+	uwsgi --ini /home/ubuntu/venv/mysite_uwsgi.ini
+			</pre>
+		</li>
+	</ol>
+
+<h4>Install uWSGI system-wide</h4>
+	<ul>
+	<p>uWSGI is only installed in the virtualenv, install uWSGI in global environment for deployment.</p>
+	<li>
+		<pre>
+	# Deactivate virtualenv:
+	deactivate
+
+	#Install uWsGI system-wide
+	sudo pip3 install uwsgi
+
+	#Run uWSGI again in the global environment
+	uwsgi --ini /home/ubuntu/venv/mysite_uwsgi.ini
+		</pre>
+	</li>
+	</ul>
+
+<h4>Emperor mode</h4>
+<p>"Emperor mode" in Nginx and uWSGI refers to a feature that allows Nginx to run as a master process and manage multiple uWSGI worker processes. In this mode, Nginx acts as a reverse proxy and load balancer for the uWSGI worker processes, and can automatically start, stop, and respawn the worker processes as needed.</p>
+	<ol>
+		<li>
+			Create a directory name vassals, -p option means the parents directories will be created if it do not already exist.
+			<pre>
+
+	sudo mkdir -p /etc/uwsgi/vassals
+			</pre>
+		</li>
+		<li>
+			Create a symlink from the default config directory to your config file
+			<pre>
+
+	sudo ln -s /home/ubuntu/venv/mysite_uwsgi.ini /etc/uwsgi/vassals/	
+			</pre>
+		</li>
+		<li>
+			Run uWSGI again with sudo
+			<pre>
+
+	sudo uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data
+			</pre>
+		</li>
+	</ol>
+
+<h4>Make uWSGI startup when the system boots</h4>
+<ol>
+	<li>
+		Create  "emperor.uwsgi.service" file at: /etc/systemd/system/emperor.uwsgi.service
+		<pre>
+
+	[Unit]
+	Description=uwsgi emperor for micro domains website
+	After=network.target
+	[Service]
+	User=ubuntu
+	Restart=always
+	ExecStart=sudo uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data
+	[Install]
+	WantedBy=multi-user.target
+		</pre>
+	</li>
+	<li>
+		After setting emperor.uwsgi.service file, enable and start sevice. It is should show the results like run Emperor mode.
+		<pre>
+
+	sudo systemctl enable emperor.uwsgi.service
+	sudo systemctl start emperor.uwsgi.service
+		</pre>
+	</li>
+	<li>
+		Now, reboot server and the application should be startup.  Below command can be used in emperor.uwsgi.service
+		<pre style="text-align: right;">
+
+	sudo systemctl enable emperor.uwsgi.service
+	sudo systemctl start emperor.uwsgi.service
+
+	sudo systemctl status emperor.uwsgi.service
+	sudo systemctl stop emperor.uwsgi.service
+	sudo systemctl restart emperor.uwsgi.service
+		</pre>
+	</li>
+</ol>
+
+<p>
+This guide has demonstrated the steps for deploying a Django application to EC2 using Nginx and uWSGI. However, in other to make the project accessible via <a href="https://sudokusolver.click">sudokusolver.click</a>, additional configuration on the AWS is required. For more informations about this topic, consult the documentation at <a href="systemarchitect">System Architect</a>.
+</p>
+{% endblock %}
