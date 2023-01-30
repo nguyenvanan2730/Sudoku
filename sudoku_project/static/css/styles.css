@@ -143,17 +143,17 @@ left: 0px;
 }
 
 .output{
+    border: 1px solid black;
     color: rgb(50, 155, 173);
     font-size: x-large;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    /* border: solid thin rgb(225, 44, 44); */
 }
 
 .input{
+    border: 1px solid black;
     color: black;
     font-size: x-large;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    /* border: solid thin black; */
 }
 
 #alert-unsolved{
