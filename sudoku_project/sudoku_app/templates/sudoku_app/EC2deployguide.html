@@ -69,13 +69,13 @@
 
 	source venv/bin/activate
   </pre>
-  <p>After the virtual environment is activated, the format on terminal will be display like: <strong>(venv) ubuntu@ip-10-0-4-232</strong>:</p>
+  <p>After the virtual environment is activated, the format on terminal will be displayed like: <strong>(venv) ubuntu@ip-10-0-4-232</strong>:</p>
   </li>
 </ol>
 
 <h4>Clone project from GitHub</h4>
   <ol>
-    <li>Update git using using version 2.34.1
+    <li>Update git using version 2.34.1
       <pre>
 
 	sudo apt install git
@@ -150,7 +150,7 @@
     <li>Create a .env file in the /home/ubuntu/venv/sudoku/sudoku_project
       <pre>
 	
-	sudo nano **/home/ubuntu/venv/sudoku/sudoku_project/**.env
+	sudo nano /home/ubuntu/venv/sudoku/sudoku_project/.env
       </pre>
     </li>
 	<li>
@@ -195,7 +195,7 @@
 			</pre>
 			uWSGI will be located at /home/ubuntu/venv/lib/python3.10/site-packages. Can check if the uWSGI is installed by running  "pip freeze" or "pip3 show uWSGI"
 		</li>
-		<li>After uWSGI is successful installed, Django can be run by the following command. Access sever through the browser, application should be executed as run python3 manage.py runserver 0.0.0.0:8000 command.
+		<li>After uWSGI is successful installed, Django can run the following command. Access sever through the browser, application should be executed as run python3 manage.py runserver 0.0.0.0:8000 command.
 			<pre>
 
 	uwsgi --http :8000 --module sudoku_project.wsgi
@@ -382,7 +382,7 @@
 		</pre>
 	</li>
 	<li>
-		After setting emperor.uwsgi.service file, enable and start sevice. It is should show the results like run Emperor mode.
+		After setting emperor.uwsgi.service file, enable and start service. It is should show the results like run Emperor mode.
 		<pre>
 
 	sudo systemctl enable emperor.uwsgi.service
