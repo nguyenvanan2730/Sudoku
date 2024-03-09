@@ -1,5 +1,5 @@
 # I.20230121 Deploy DJANGO PROJECT TO EC2 Ubuntu
-Connectserver: ssh -i /Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku-info/pro-sudoku/pro-sudoku.pem ubuntu@ec2-52-68-221-167.ap-northeast-1.compute.amazonaws.com
+Connectserver: ssh -i /Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku-info/pro-sudoku/pro-sudoku.pem ubuntu@ec2-xx-xx-xx-167.ap-northeast-1.compute.amazonaws.com
 
 ### 1. Update apt
 sudo apt update
@@ -26,7 +26,7 @@ sudo apt install git
 git --version
 --> 2.34.1
 ### 2. using git clone and token for clone the project
-git clone https://nguyenvanan2730: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@github.com/nguyenvanan2730/sudoku.git
+git clone https://nguyenvanan2730:xxxxxxxxxxxxxxxxxxxxx@github.com/nguyenvanan2730/sudoku.git
 
 # IV.Install Python library
 In virtual enviroment, Python library packages is location at:
@@ -180,24 +180,24 @@ uwsgi --socket mysite.sock --module sudoku_project.wsgi --chmod-socket=664
 ### 5. mysite_uwsgi.ini file
 [uwsgi]
 
-# Django-related settings
-# the base directory (full path)
+#### Django-related settings
+#### the base directory (full path)
 chdir           = /home/ubuntu/venv/sudoku/sudoku_project
-# Django's wsgi file
+#### Django's wsgi file
 module          = sudoku_project.wsgi
-# the virtualenv (full path)
+#### the virtualenv (full path)
 home            = /home/ubuntu/venv
 
-# process-related settings
-# master
+#### process-related settings
+#### master
 master          = true
-# maximum number of worker processes
+#### maximum number of worker processes
 processes       = 10
-# the socket (use the full path to be safe
+#### the socket (use the full path to be safe
 socket          = /home/ubuntu/venv/sudoku/sudoku_project/mysite.sock
-# ... with appropriate permissions - may be needed
-# chmod-socket    = 664
-# clear environment on exit
+#### ... with appropriate permissions - may be needed
+#### chmod-socket    = 664
+#### clear environment on exit
 vacuum          = true
 
 # IX. Using Port 80 instead port 8000
@@ -226,18 +226,18 @@ uwsgi --emperor /home/ubuntu/venv/vassals --uid www-data --gid www-data
 
 #### 4. Startup uWSGI when the system boots. Create file "emperor.uwsgi.service" a systemd service at: etc/systemd/system/
 ----------------------------------------------------------------------------------------------------------
-[Unit]
-Description=uwsgi emperor for micro domains website
-After=network.target
-[Service]
-User=ubuntu
-Restart=always
-ExecStart=/home/ubuntu/venv/bin/uwsgi --emperor /home/ubuntu/venv/vassals --uid www-data --gid www-data
-[Install]
-WantedBy=multi-user.target
+##### [Unit]
+##### Description=uwsgi emperor for micro domains website
+##### After=network.target
+##### [Service]
+##### User=ubuntu
+##### Restart=always
+##### ExecStart=/home/ubuntu/venv/bin/uwsgi --emperor /home/ubuntu/venv/vassals --uid www-data --gid www-data
+##### [Install]
+##### WantedBy=multi-user.target
 ----------------------------------------------------------------------------------------------------------
 
-### 5. Command
+#### 5. Command
 systemctl enable emperor.uwsgi.service
 systemctl start emperor.uwsgi.service
 
@@ -251,7 +251,7 @@ https://tonyteaches.tech/django-nginx-uwsgi-tutorial/
 # XI. Operation command
 
 1. Login to EC2
- ssh -i /Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku-info/pro-sudoku/pro-sudoku.pem ubuntu@ec2-52-68-221-167.ap-northeast-1.compute.amazonaws.com
+ ssh -i /Users/nguyenvanan2730/Projects/Sudoku-AWS/sudoku-info/pro-sudoku/pro-sudoku.pem ubuntu@ec2-XX-XX-XXX.ap-northeast-1.compute.amazonaws.com
 
  2. active virtual enviroment
  source venv/bin/activate
